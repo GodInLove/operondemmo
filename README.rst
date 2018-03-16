@@ -7,4 +7,5 @@ operondemmo: an independent demmo of KNOWN operon predict method
 Library
 --------------------------------------------------------------------------------
 - Python3.6
+- Numpy
 - Linux(Fedora)

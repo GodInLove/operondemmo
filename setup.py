@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-self_version = "0.0"
+from operondemmo.operon import self_version
 
 try:
     LONG_DESCRIPTION = open("README.rst", "rb").read().decode("utf-8")
@@ -12,8 +12,15 @@ setup(
     version=self_version,
     packages=find_packages(),
     url='https://github.com/GodInLove/operondemmo',
-    license='GPL-3.0',
+    license='GPLv3',
     author='yaodongliu',
     author_email='yd.liu.scu@gmail.com',
-    description=LONG_DESCRIPTION,
+    description="an independent demmo of KNOWN operon predict method",
+    long_description=LONG_DESCRIPTION,
+    install_requires=[
+        'numpy>=1.14',
+    ],
+    entry_points={
+        "console_scripts": ['operondemmo = operondemmo.operon:main']
+    },
 )
