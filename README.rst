@@ -12,7 +12,9 @@ Library
 
 Install
 --------------------------------------------------------------------------------
-1. PyPI
+
+PyPI
+^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: console
 
@@ -33,7 +35,8 @@ To upgrade to latest version:
     $ pip3 install --upgrade operondemmo --user
 
 
-2. GitHub
+GitHub
+^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: console
 
@@ -64,35 +67,38 @@ Quick start
     $ operondemmo -i count -g gff/eco.gff
 
 
+Outputs: ``test/OUT/operon.txt``
+
 Basic Parameters
 ^^^^^^^^^^^^^^^^^^^^
 -h
-    PRINT_HELP
-    show this help message and exit
+    **PRINT_HELP**
+    (show this help message and exit)
 -i
-    INPUT_FILES
-    A directory to store a group of result files through [samtools depth XXX > xxx.txt] command
+    **INPUT_FILES**
+    (A directory to store a group of result files through [samtools depth XXX > xxx.txt] command)
 -o
-    OUTPUT_PATH
-    A directory include output data(operon file).
+    **OUTPUT_PATH**
+    (A directory include output data(operon file).)
 -g
-    GFF_FILE
-    The gff file of the prokaryote
+    **GFF_FILE**
+    (The gff file of the prokaryote)
 -t
-    THRESHOLD
-    the threshold in (-1,1)
+    **THRESHOLD**
+    (the threshold in (-1,1))
 
 Advanced Parameters
 ^^^^^^^^^^^^^^^^^^^^
-WAITING MORE
+
+**WAITING MORE**
 
 
 
-**cite:**
- Junier I, Unal E B, Yus E, et al. Insights into the mechanisms of basal coordination of transcription using a genome-reduced bacterium[J]. Cell systems, 2016, 2(6): 391-401.
+*cite:*
+ 1. Junier I, Unal E B, Yus E, et al. Insights into the mechanisms of basal coordination of transcription using a genome-reduced bacterium[J]. Cell systems, 2016, 2(6): 391-401.
 
 
-.. |PyPI version| image::https://img.shields.io/pypi/v/operondemmo.svg?style=flat-square
+.. |PyPI version| image:: https://img.shields.io/pypi/v/operondemmo.svg?style=flat-square
    :target: https://pypi.python.org/pypi/operondemmo
 .. |Docs| image:: https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat-square
    :target: https://github.com/GodInLove/operondemmo
