@@ -10,7 +10,7 @@ except IOError:
 setup(
     name='operondemmo',
     version=self_version,
-
+    keywords='operon',
     packages=find_packages(),
     url='https://github.com/GodInLove/operondemmo',
     license='GPLv3',

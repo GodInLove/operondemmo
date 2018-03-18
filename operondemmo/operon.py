@@ -45,7 +45,7 @@ def prepare(argv):
     parser.add_argument("-p", action="store", dest="process_thread", default=1, type=int,
                         help="Specify the number of processing threads (CPUs).default:1")
     parser.add_argument("-t", action="store", dest="threshold", default=0.6, type=int,
-                        help="")
+                        help="the threshold in (-1,1)")
     advanced_argv.add_argument("-k", action="store", dest="kegg_id", default="null",
                                help="The kegg id of the prokaryote")
     advanced_argv.add_argument("--auto_gff", action="store_true", dest="auto_gff", default=False,
