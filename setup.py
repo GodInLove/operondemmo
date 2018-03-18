@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
-
-from operondemmo.operon import self_version
+from operondemmo.version import version
+self_version = version
 
 try:
     LONG_DESCRIPTION = open("README.rst", "rb").read().decode("utf-8")
@@ -10,6 +10,7 @@ except IOError:
 setup(
     name='operondemmo',
     version=self_version,
+
     packages=find_packages(),
     url='https://github.com/GodInLove/operondemmo',
     license='GPLv3',

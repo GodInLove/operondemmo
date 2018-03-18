@@ -1,4 +1,2 @@
-from setup import self_version
-
-version = self_version
+version = "0.1"
 
