@@ -1,4 +1,4 @@
-operondemmo: an independent demmo of KNOWN operon predict method
+operondemmo: an independent demo of KNOWN operon predict method
 ==============================================================================
 |PyPI version| |Docs| |License|
 

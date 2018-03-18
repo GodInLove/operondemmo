@@ -19,7 +19,7 @@ APP_VERSION = (
         '''
     ----------------------------------------------------------------------
     
-    operondemmo-(%s) - an independent demmo of KNOWN operon predict method
+    operondemmo-(%s) - an independent demo of KNOWN operon predict method
     
     ----------------------------------------------------------------------
     ''' % self_version

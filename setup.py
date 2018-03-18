@@ -5,7 +5,7 @@ self_version = version
 try:
     LONG_DESCRIPTION = open("README.rst", "rb").read().decode("utf-8")
 except IOError:
-    LONG_DESCRIPTION = "an independent demmo of KNOWN operon predict method"
+    LONG_DESCRIPTION = "an independent demo of KNOWN operon predict method"
 
 setup(
     name='operondemmo',
@@ -16,7 +16,7 @@ setup(
     license='GPLv3',
     author='yaodongliu',
     author_email='yd.liu.scu@gmail.com',
-    description="an independent demmo of KNOWN operon predict method",
+    description="an independent demo of KNOWN operon predict method",
     long_description=LONG_DESCRIPTION,
     install_requires=[
         'numpy>=1.14',
