@@ -391,7 +391,7 @@ def generate_simple_gff(gff_file, output_path):
 if __name__ == "__main__":
     test_gff_path = "/home/lyd/document/2018.1/gamma_domain/simple_eco.gff_3"
     test_gene_pos, test_gene_strand = get_gene_pos_strand(test_gff_path)
-    final_gene_strand, final_gene_index, final_gene_sort = \
+    _gene_strand, _gene_index, _gene_sort = \
         from_simple_gff_information_to_get(test_gene_pos, test_gene_strand)
 
     # test get_list_gene_strand()

@@ -12,7 +12,6 @@ from operondemmo.input_file_handle.handle_gff import auto_download, generate_sim
     get_gene_pos_strand, from_simple_gff_information_to_get, sorted_gene
 from operondemmo.version import version
 
-
 self_version = version
 
 APP_VERSION = (

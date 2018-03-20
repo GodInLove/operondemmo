@@ -39,7 +39,7 @@ def compute_co_expression_by_c_i_j(matrix_a):
     matrix_condition_s_v = get_co_expression_by_condition(matrix_a)
     matrix_c_i_j = get_co_expression_gene_i_with_j(matrix_condition_s_v)
     condition_num = matrix_a.shape[1]
-    matrix_c_i_j = matrix_c_i_j / (2 * condition_num * condition_num)
+    matrix_c_i_j = matrix_c_i_j /(condition_num * condition_num)
     matrix_t = matrix_c_i_j.T
     matrix_c_i_j_final = matrix_c_i_j + matrix_t
     return matrix_c_i_j_final
