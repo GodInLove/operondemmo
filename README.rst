@@ -21,7 +21,7 @@ PyPI
     $ pip3 install operondemmo --user
 
 
-or `download PhySpeTree <https://pypi.python.org/pypi/operondemmo/>`_ and install:
+or `download operondemmo <https://pypi.python.org/pypi/operondemmo/>`_ and install:
 
 .. code-block:: console
 
