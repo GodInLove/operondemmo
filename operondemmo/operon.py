@@ -7,7 +7,7 @@ import os
 import numpy
 
 from operondemmo.co_expression_matrix.c_i_j import compute_co_expression_by_c_i_j
-from operondemmo.hierarchical_cluster.gamma_domain import get_result_by_clustering
+from operondemmo.hierarchical_cluster.gamma_domain import get_result_by_clustering, get_result_by_clustering2
 from operondemmo.input_file_handle.handle_gff import auto_download, generate_simple_gff, \
     get_gene_pos_strand, from_simple_gff_information_to_get, sorted_gene
 from operondemmo.version import version
@@ -120,7 +120,7 @@ def operon_predict(threshold, depth_files, output_path, gff_file_path, p, co_exp
     print("done\ngamma_domain clustering...")
     # hierarchical_cluster
     result_file = output_path + "operon.txt"
-    get_result_by_clustering(result_file, final_gene_strand, final_gene_index, final_gene_sort, matrix_i_j, threshold)
+    get_result_by_clustering2(result_file, final_gene_strand, final_gene_index, final_gene_sort, matrix_i_j, threshold)
     print("done")
     print("PLEASE open your output_path:", result_file)
 
