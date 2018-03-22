@@ -7,6 +7,8 @@ import os
 import numpy
 
 from operondemmo.co_expression_matrix.c_i_j import compute_co_expression_by_c_i_j
+from operondemmo.co_expression_matrix.person_i_j import compute_co_expression_by_person
+from operondemmo.co_expression_matrix.spearman_i_j import compute_co_expression_by_spearman
 from operondemmo.hierarchical_cluster.gamma_domain import get_result_by_clustering, get_result_by_clustering2
 from operondemmo.input_file_handle.handle_gff import auto_download, generate_simple_gff, \
     get_gene_pos_strand, from_simple_gff_information_to_get, sorted_gene
@@ -180,11 +182,17 @@ def from_depth_file_to_get_co_matrix_co_expression(depth_files, gene_pos_dict, m
         print("time: compute_co_expression_matrix,", end - begin)
         return matrix_c_i_j
     elif method == 1:
-        print("WAITING THE AUTHOR ...")
-        sys.exit(1)
+        begin = datetime.datetime.now()
+        matrix_c_person = compute_co_expression_by_person(matrix_groups_by_condition)
+        end = datetime.datetime.now()
+        print("time: compute_co_expression_matrix,", end - begin)
+        return matrix_c_person
     else:
-        print("WAITING THE AUTHOR...")
-        sys.exit(1)
+        begin = datetime.datetime.now()
+        matrix_c_spearman = compute_co_expression_by_spearman(matrix_groups_by_condition)
+        end = datetime.datetime.now()
+        print("time: compute_co_expression_matrix,", end - begin)
+        return matrix_c_spearman
 
 
 def check_input_file(depth_files):

@@ -89,8 +89,10 @@ Basic Parameters
 
 Advanced Parameters
 ^^^^^^^^^^^^^^^^^^^^
-
-**WAITING MORE**
+--person
+   Build co-expression matrix with person correlation
+--spearman
+   Build co-expression matrix with spearman correlation
 
 
 

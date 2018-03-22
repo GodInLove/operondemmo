@@ -20,6 +20,7 @@ setup(
     long_description=LONG_DESCRIPTION,
     install_requires=[
         'numpy>=1.14',
+        'pandas',
     ],
     entry_points={
         "console_scripts": ['operondemmo = operondemmo.operon:main']
