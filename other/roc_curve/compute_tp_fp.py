@@ -79,6 +79,32 @@ def roc_curve(simple_gff, depth_files, method, out_path, p_d_list, n_d_list, tp_
     return tpr, fpr
 
 
+def ss_curve(simple_gff, depth_files, method, out_path, p_d_list, n_d_list, tp_fp_file, roc_file_path, threshold_list):
+    generate_output_files(simple_gff, depth_files, method, out_path, threshold_list)
+    list_files = os.listdir(out_path)
+    list_files = sorted(list_files)
+    tp_fp_file_fp = open(tp_fp_file, 'w')
+    tpr_fpr_file_fp = open(roc_file_path, 'w')
+    p = len(p_d_list)
+    n = len(n_d_list)
+    for _file in list_files:
+        print(_file)
+        tp = compute_n(p_d_sort_list, out_path + _file)
+        fp = compute_n(n_d_sort_list, out_path + _file)
+        tp_fp_file_fp.write(str(tp) + "\t" + str(fp) + "\n")
+        print(tp, fp)
+        tpr = tp / p
+        spc = 1 - fp / n
+        print(tpr, spc)
+        tpr_fpr_file_fp.write(str(tpr) + "\t" + str(spc) + "\n")
+    tp_fp_file_fp.close()
+    tpr_fpr_file_fp.close()
+    matrix_a = numpy.loadtxt(roc_file_path)
+    tpr = matrix_a[..., 0].tolist()
+    spc = matrix_a[..., 1].tolist()
+    return tpr, spc
+
+
 def get_t_list(start, stop, n):
     sep = (stop - start) / n
     t_list = []
