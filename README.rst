@@ -61,11 +61,12 @@ Quick start
 
 .. code-block:: console
 
-    $ git clone https://github.com/GodInLove/operondemmo.git
-    $ cd operondemmo/test/count && tar -zxf count.tar.gz
-    $ rm -f count.tar.gz
-    $ cd ..
-    $ operondemmo -i count -g gff/eco.gff
+   $ mkdir test
+   $ wget http://lyd.ourblogs.me/operondemmo/test/count.tar.gz
+   $ wget http://lyd.ourblogs.me/operondemmo/test/gff/eco.gff
+   $ cd tar -zxf count.tar.gz
+   $ rm -f count.tar.gz
+   $ operondemmo -i count -g eco.gff
 
 
 Outputs: ``test/OUT/operon.txt``
