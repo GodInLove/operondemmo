@@ -4,7 +4,7 @@ operondemmo: an independent demo of KNOWN operon predict method
 
 .. contents:: :local:
 
-Library
+Dependencies
 --------------------------------------------------------------------------------
 - Python3.6
 - Numpy
