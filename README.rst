@@ -79,7 +79,7 @@ Basic Parameters
     show this help message and exit
 -i
     **INPUT_DIR:**
-    A directory to store a group of files. default:need [samtools depth XXX > xxx.txt] result files;when '--kallisto', need fastq files and fna file."
+    A directory to store a group of files.
 -o
     **OUTPUT_DIR:**
     A directory include output data(operon file).
