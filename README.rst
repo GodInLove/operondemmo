@@ -44,6 +44,7 @@ GitHub
 
     $ wget https://github.com/GodInLove/operondemmo/archive/master.zip
     $ unzip operondemmo-master.zip
+    $ cd operondemmo-master
     $ python3 setup.py install
 
 
