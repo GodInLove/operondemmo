@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5d176997-977a-44d6-bce2-7fc667332cc4" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/operondemmo/input_file_handle/handle_input.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/operondemmo/input_file_handle/handle_kallisto.py" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/lyd.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/lyd.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/README.rst" afterPath="$PROJECT_DIR$/README.rst" />
-      <change beforePath="$PROJECT_DIR$/operondemmo/hierarchical_cluster/gamma_domain.py" afterPath="$PROJECT_DIR$/operondemmo/hierarchical_cluster/gamma_domain.py" />
-      <change beforePath="$PROJECT_DIR$/operondemmo/input_file_handle/handle_gff.py" afterPath="$PROJECT_DIR$/operondemmo/input_file_handle/handle_gff.py" />
-      <change beforePath="$PROJECT_DIR$/operondemmo/operon.py" afterPath="$PROJECT_DIR$/operondemmo/operon.py" />
       <change beforePath="$PROJECT_DIR$/operondemmo/version.py" afterPath="$PROJECT_DIR$/operondemmo/version.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,11 +24,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="handle_kallisto.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="handle_kallisto.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/operondemmo/input_file_handle/handle_kallisto.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="289">
               <caret line="23" column="28" lean-forward="true" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="version.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/operondemmo/version.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -133,9 +136,9 @@
         <option value="$PROJECT_DIR$/operondemmo/input_file_handle/handle_gff.py" />
         <option value="$PROJECT_DIR$/README.rst" />
         <option value="$PROJECT_DIR$/operondemmo/input_file_handle/handle_input.py" />
-        <option value="$PROJECT_DIR$/operondemmo/version.py" />
         <option value="$PROJECT_DIR$/operondemmo/operon.py" />
         <option value="$PROJECT_DIR$/operondemmo/input_file_handle/handle_kallisto.py" />
+        <option value="$PROJECT_DIR$/operondemmo/version.py" />
       </list>
     </option>
   </component>
@@ -472,7 +475,14 @@
       <option name="project" value="LOCAL" />
       <updated>1521879599355</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="add &quot;--kallisto&quot;">
+      <created>1522055082913</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1522055082913</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TodoView">
@@ -555,7 +565,8 @@
     <MESSAGE value="add pages" />
     <MESSAGE value="update README" />
     <MESSAGE value="revert" />
-    <option name="LAST_COMMIT_MESSAGE" value="revert" />
+    <MESSAGE value="add &quot;--kallisto&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="add &quot;--kallisto&quot;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -799,6 +810,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-226">
           <caret line="93" column="11" lean-forward="false" selection-start-line="93" selection-start-column="2" selection-end-line="93" selection-end-column="11" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -806,14 +818,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2193">
           <caret line="59" column="13" lean-forward="false" selection-start-line="59" selection-start-column="4" selection-end-line="59" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/operondemmo/version.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="17" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -848,6 +852,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="23" column="28" lean-forward="true" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/operondemmo/version.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding />
         </state>
       </provider>
