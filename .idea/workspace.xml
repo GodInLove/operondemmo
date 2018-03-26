@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5d176997-977a-44d6-bce2-7fc667332cc4" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/README.rst" afterPath="$PROJECT_DIR$/README.rst" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -47,8 +46,8 @@
       <file leaf-file-name="README.rst" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.rst">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="104" column="22" lean-forward="true" selection-start-line="104" selection-start-column="22" selection-end-line="104" selection-end-column="22" />
+            <state relative-caret-position="1496">
+              <caret line="111" column="27" lean-forward="true" selection-start-line="111" selection-start-column="27" selection-end-line="111" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -57,7 +56,7 @@
       <file leaf-file-name="handle_input.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/operondemmo/input_file_handle/handle_input.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
+            <state relative-caret-position="493">
               <caret line="33" column="56" lean-forward="false" selection-start-line="33" selection-start-column="40" selection-end-line="33" selection-end-column="56" />
               <folding />
             </state>
@@ -67,7 +66,7 @@
       <file leaf-file-name="operon.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/operondemmo/operon.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="283">
+            <state relative-caret-position="2516">
               <caret line="163" column="4" lean-forward="false" selection-start-line="163" selection-start-column="4" selection-end-line="163" selection-end-column="4" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
@@ -170,8 +169,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -481,7 +480,14 @@
       <option name="project" value="LOCAL" />
       <updated>1522055644805</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="update readme">
+      <created>1522062393591</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1522062393592</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TodoView">
@@ -494,7 +500,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="377" y="116" width="1920" height="1044" extended-state="6" />
+    <frame x="218" y="47" width="1920" height="1044" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293348" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -575,13 +581,7 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/other/roc_curve/compute_tp_fp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2074">
-          <caret line="130" column="14" lean-forward="true" selection-start-line="130" selection-start-column="14" selection-end-line="130" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/other/roc_curve/compute_tp_fp.py" />
     <entry file="file://$PROJECT_DIR$/README.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1598">
@@ -631,20 +631,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/other/roc_curve/compute_tp_fp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/other/roc_curve/compute_tp_fp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/other/roc_curve/compute_tp_fp.py" />
+    <entry file="file://$PROJECT_DIR$/other/roc_curve/compute_tp_fp.py" />
     <entry file="file://$PROJECT_DIR$/operondemmo/input_file_handle/handle_gff.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3179">
@@ -728,20 +716,8 @@
     <entry file="file://$PROJECT_DIR$/operondemmo.egg-info/entry_points.txt" />
     <entry file="file://$PROJECT_DIR$/operondemmo.egg-info/dependency_links.txt" />
     <entry file="file://$PROJECT_DIR$/test.py" />
-    <entry file="file://$PROJECT_DIR$/other/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="45" lean-forward="false" selection-start-line="25" selection-start-column="45" selection-end-line="25" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/other/assets/css/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="1947" column="31" lean-forward="false" selection-start-line="1947" selection-start-column="30" selection-end-line="1947" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/other/index.html" />
+    <entry file="file://$PROJECT_DIR$/other/assets/css/main.css" />
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/pycharm.jar!/resources/html5-schema/html5/tables.rnc">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="214">
@@ -749,20 +725,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/other/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="89" column="47" lean-forward="false" selection-start-line="89" selection-start-column="47" selection-end-line="94" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/other/roc_curve/generate_negative_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="71" column="39" lean-forward="false" selection-start-line="71" selection-start-column="25" selection-end-line="71" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/other/index.html" />
+    <entry file="file://$PROJECT_DIR$/other/roc_curve/generate_negative_data.py" />
     <entry file="file://$PROJECT_DIR$/operondemmo/co_expression_matrix/spearman_i_j.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -795,7 +759,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="69">
           <caret line="38" column="35" lean-forward="true" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -810,13 +773,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2193">
           <caret line="59" column="13" lean-forward="false" selection-start-line="59" selection-start-column="4" selection-end-line="59" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/operondemmo/operon.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
+        <state relative-caret-position="2516">
           <caret line="163" column="4" lean-forward="false" selection-start-line="163" selection-start-column="4" selection-end-line="163" selection-end-column="4" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
@@ -826,20 +788,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/operondemmo/input_file_handle/handle_input.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
+        <state relative-caret-position="493">
           <caret line="33" column="56" lean-forward="false" selection-start-line="33" selection-start-column="40" selection-end-line="33" selection-end-column="56" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/other/roc_curve/compute_tp_fp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1920">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/other/roc_curve/compute_tp_fp.py" />
     <entry file="file://$PROJECT_DIR$/operondemmo/input_file_handle/handle_kallisto.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -858,8 +813,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.rst">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="104" column="22" lean-forward="true" selection-start-line="104" selection-start-column="22" selection-end-line="104" selection-end-column="22" />
+        <state relative-caret-position="1496">
+          <caret line="111" column="27" lean-forward="true" selection-start-line="111" selection-start-column="27" selection-end-line="111" selection-end-column="27" />
           <folding />
         </state>
       </provider>
