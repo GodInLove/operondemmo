@@ -42,8 +42,8 @@ GitHub
 
 .. code-block:: console
 
-    $ git clone https://github.com/GodInLove/operondemmo.git
-    $ cd operondemmo
+    $ wget https://github.com/GodInLove/operondemmo/archive/master.zip
+    $ unzip operondemmo-master.zip
     $ python3 setup.py install
 
 
