@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5d176997-977a-44d6-bce2-7fc667332cc4" name="Default" comment="">
+    <list default="true" id="5d176997-977a-44d6-bce2-7fc667332cc4" name="Default" comment="add &quot;--kallisto&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/operondemmo/version.py" afterPath="$PROJECT_DIR$/operondemmo/version.py" />
+      <change beforePath="$PROJECT_DIR$/dist/operondemmo-0.0.5.tar.gz" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/dist/operondemmo-0.5.tar.gz" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/dist/operondemmo-1.0.tar.gz" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/operondemmo.egg-info/PKG-INFO" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/operondemmo.egg-info/SOURCES.txt" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/operondemmo.egg-info/dependency_links.txt" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/operondemmo.egg-info/entry_points.txt" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/operondemmo.egg-info/requires.txt" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/operondemmo.egg-info/top_level.txt" afterPath="" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -37,8 +45,8 @@
       <file leaf-file-name="version.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/operondemmo/version.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+            <state relative-caret-position="51">
+              <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -183,24 +191,6 @@
               <item name="operondemmo" type="b2602c69:ProjectViewProjectNode" />
               <item name="operondemmo" type="462c0819:PsiDirectoryNode" />
               <item name="operondemmo" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="operondemmo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="operondemmo" type="462c0819:PsiDirectoryNode" />
-              <item name="operondemmo" type="462c0819:PsiDirectoryNode" />
-              <item name="co_expression_matrix" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="operondemmo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="operondemmo" type="462c0819:PsiDirectoryNode" />
-              <item name="operondemmo" type="462c0819:PsiDirectoryNode" />
-              <item name="hierarchical_cluster" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="operondemmo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="operondemmo" type="462c0819:PsiDirectoryNode" />
-              <item name="operondemmo" type="462c0819:PsiDirectoryNode" />
-              <item name="input_file_handle" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="operondemmo" type="b2602c69:ProjectViewProjectNode" />
@@ -482,7 +472,14 @@
       <option name="project" value="LOCAL" />
       <updated>1522055082913</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="add &quot;--kallisto&quot;">
+      <created>1522055098030</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1522055098030</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TodoView">
@@ -496,16 +493,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="377" y="116" width="1920" height="1044" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293348" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293348" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293348" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26499456" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3478735" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3478735" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293348" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24760383" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24760383" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44195953" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -858,8 +854,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/operondemmo/version.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        <state relative-caret-position="51">
+          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
         </state>
       </provider>
