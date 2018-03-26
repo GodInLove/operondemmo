@@ -102,7 +102,7 @@ default: [samtools depth] result files
       ...
 
 
-or ``--kallisto``
+or when ``--kallisto``
 .. code-block::
    example_input/
       eco.fna
