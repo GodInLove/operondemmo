@@ -95,8 +95,11 @@ Basic Parameters
 **INPUT_DIR:**
 
 default: [samtools depth] result files
-.. code-block::
-   example_count/
+
+
+.. code-block:: console
+
+    example_count/
       SRR6322033_count.txt
       SRR6322035_count.txt
       SRR6322037_count.txt
@@ -104,7 +107,9 @@ default: [samtools depth] result files
 
 
 or when ``--kallisto``
-.. code-block::
+
+.. code-block:: console
+
    example_input/
       eco.fna
       SRR6322033_1.fastq.gz
