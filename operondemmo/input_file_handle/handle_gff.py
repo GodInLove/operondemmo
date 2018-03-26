@@ -25,6 +25,7 @@ def findall_pat(pat, content, result="list"):
 
 
 def auto_download(kegg_id):
+    print("waiting for coding...")
     download_path = ""
     return download_path
 
@@ -310,14 +311,15 @@ def generate_simple_gff(gff_file, output_path):
     simple_gff_fp = open(simple_gff_path, 'w')
     for gene in genes:
         if 'locus_tag' not in gene[-1]:
+            pass
             # print(gene)  # always with one (start, stop)
             # if 'gbkey' not in gene[-1]:
             #     print(gene)  # NONE
-            start = gene[0][0]
-            stop = gene[0][1]
-            _id = gene[1]['ID'][0]
-            gb_key = gene[1]['gbkey'][0]
-            simple_gff_fp.write("-\t-\t-\t-\t" + str(start) + "\t" + str(stop) + "\t" + _id + "\t" + gb_key + "\n")
+            # start = gene[0][0]
+            # stop = gene[0][1]
+            # _id = gene[1]['ID'][0]
+            # gb_key = gene[1]['gbkey'][0]
+            # simple_gff_fp.write("-\t-\t-\t-\t" + str(start) + "\t" + str(stop) + "\t" + _id + "\t" + gb_key + "\n")
         else:
             if len(gene) == 2:
                 start = gene[0][0]

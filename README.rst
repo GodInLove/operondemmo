@@ -6,10 +6,11 @@ operondemmo: an independent demo of KNOWN operon predict method
 
 Dependencies
 --------------------------------------------------------------------------------
-- Python3.6
-- Numpy
-- Pandas
+- `Python3.6 <https://www.python.org/>`_
+- `Numpy <http://www.numpy.org>`_
+- `Pandas <https://pandas.pydata.org/>`_
 - Linux(Fedora)
+- `Kallisto <https://pachterlab.github.io/kallisto/>`_
 
 Install
 --------------------------------------------------------------------------------
@@ -74,20 +75,45 @@ Outputs: ``test/OUT/operon.txt``
 Basic Parameters
 ^^^^^^^^^^^^^^^^^^^^
 -h
-    **PRINT_HELP**
-    (show this help message and exit)
+    **PRINT_HELP:**
+    show this help message and exit
 -i
-    **INPUT_FILES**
-    (A directory to store a group of result files through [samtools depth XXX > xxx.txt] command)
+    **INPUT_DIR:**
+    A directory to store a group of files. default:need [samtools depth XXX > xxx.txt] result files;when '--kallisto', need fastq files and fna file."
 -o
-    **OUTPUT_PATH**
-    (A directory include output data(operon file).)
+    **OUTPUT_DIR:**
+    A directory include output data(operon file).
 -g
-    **GFF_FILE**
-    (The gff file of the prokaryote)
+    **GFF_FILE:**
+    The gff file of the prokaryote
 -t
     **THRESHOLD**
-    (the threshold in (-1,1))
+    the threshold in (-1,1)
+
+
+**INPUT_DIR:**
+
+default: [samtools depth] result files
+.. code-block::
+   example_count/
+      SRR6322033_count.txt
+      SRR6322035_count.txt
+      SRR6322037_count.txt
+      ...
+
+
+or ``--kallisto``
+.. code-block::
+   example_input/
+      eco.fna
+      SRR6322033_1.fastq.gz
+      SRR6322033_2.fastq.gz
+      SRR6322035_1.fastq.gz
+      SRR6322035_2.fastq.gz
+      SRR6322037_1.fastq.gz
+      SRR6322037_2.fastq.gz
+      ...
+
 
 Advanced Parameters
 ^^^^^^^^^^^^^^^^^^^^
@@ -95,7 +121,8 @@ Advanced Parameters
    Build co-expression matrix with person correlation
 --spearman
    Build co-expression matrix with spearman correlation
-
+--kallisto
+   Build expression matrix with kallisto result
 
 
 *cite:*

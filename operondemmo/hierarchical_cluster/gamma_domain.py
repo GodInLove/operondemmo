@@ -34,7 +34,8 @@ class Gamma:
 
     def clustering2(self, t):
         cluster_matrix = self.matrix.copy()
-        while cluster_matrix.max() > t:
+        while cluster_matrix.max() >= t:
+            # print(cluster_matrix)
             a = cluster_matrix.max()
             x_array, y_array = numpy.where(cluster_matrix == a)
             x = x_array[0]
@@ -70,7 +71,7 @@ class Gamma:
                 self.save_to_trees(new_node)
             else:
                 print("something wrong")
-            cluster_matrix[cluster_matrix == cluster_matrix.max()] = -2
+            cluster_matrix[x][y] = -2
             # print(cluster_matrix)
         for i in range(len(cluster_matrix)):
             if not self.is_exist(i):
@@ -106,7 +107,7 @@ class Gamma:
                 self.save_to_trees(new_node)
             else:
                 print("something wrong")
-            cluster_matrix[cluster_matrix == cluster_matrix.max()] = -2
+            cluster_matrix[x][y] = -2
             # print(cluster_matrix)
 
     def is_exist(self, num):
@@ -192,7 +193,7 @@ def partition_s_rna(cluster_result, partition_index):
 
 
 def get_result_by_clustering(result_file, final_gene_strand, final_gene_index, final_gene_sort, matrix_i_j, threshold):
-    threshold = threshold + 1
+    threshold = threshold + 2
     result_list = []
     result_file_fp = open(result_file, 'w')
     i_iter = 0
@@ -201,7 +202,7 @@ def get_result_by_clustering(result_file, final_gene_strand, final_gene_index, f
         slice_start = final_gene_index[i_iter][0]
         slice_stop = final_gene_index[i_iter][-1]
         matrix_tmp = matrix_i_j[slice_start:slice_stop + 1, slice_start:slice_stop + 1]
-        matrix_tmp = numpy.diag(matrix_tmp.diagonal(-1) + 1, -1)
+        matrix_tmp = numpy.diag(matrix_tmp.diagonal(-1) + 2, -1)
         # print(matrix_tmp)
         gamma = Gamma(matrix_tmp)
         gamma.clustering()
@@ -226,7 +227,7 @@ def get_result_by_clustering(result_file, final_gene_strand, final_gene_index, f
 
 
 def get_result_by_clustering2(result_file, final_gene_strand, final_gene_index, final_gene_sort, matrix_i_j, threshold):
-    threshold = threshold + 1
+    threshold = threshold + 2
     result_list = []
     result_file_fp = open(result_file, 'w')
     i_iter = 0
@@ -235,11 +236,10 @@ def get_result_by_clustering2(result_file, final_gene_strand, final_gene_index, 
         slice_start = final_gene_index[i_iter][0]
         slice_stop = final_gene_index[i_iter][-1]
         matrix_tmp = matrix_i_j[slice_start:slice_stop + 1, slice_start:slice_stop + 1]
-        matrix_tmp = numpy.diag(matrix_tmp.diagonal(-1) + 1, -1)
+        matrix_tmp = numpy.diag(matrix_tmp.diagonal(-1) + 2, -1)
         # print(matrix_tmp)
         gamma = Gamma(matrix_tmp)
         gamma_result = gamma.clustering2(threshold)
-        # print(result)
         current_gene_strand_list = final_gene_strand[i_iter]
         # print(current_gene_strand_list)
         tmp_index = get_index_partition(current_gene_strand_list)

@@ -1,10 +1,8 @@
-import datetime
+import time
 import sys
 import argparse
 
 import os
-
-import numpy
 
 from operondemmo.co_expression_matrix.c_i_j import compute_co_expression_by_c_i_j
 from operondemmo.co_expression_matrix.person_i_j import compute_co_expression_by_person
@@ -12,6 +10,9 @@ from operondemmo.co_expression_matrix.spearman_i_j import compute_co_expression_
 from operondemmo.hierarchical_cluster.gamma_domain import get_result_by_clustering, get_result_by_clustering2
 from operondemmo.input_file_handle.handle_gff import auto_download, generate_simple_gff, \
     get_gene_pos_strand, from_simple_gff_information_to_get, sorted_gene
+from operondemmo.input_file_handle.handle_input import load_from_input_files, check_input_file, compute_expression
+from operondemmo.input_file_handle.handle_kallisto import check_kallisto, split_from_input, generate_kallisto_index, \
+    get_tpm_from_kallisto_quant, load_from_tpm_files
 from operondemmo.version import version
 
 self_version = version
@@ -36,25 +37,28 @@ def prepare(argv):
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
 
     advanced_argv = parser.add_argument_group("ADVANCED OPTIONS")
-    parser.add_argument("-i", action="store", dest="input_files", default="null",
-                        help="A directory to store a group of result files "
-                             "through [samtools depth XXX > xxx.txt] command")
-    parser.add_argument("-o", action="store", dest="output_path", default="OUT",
+    parser.add_argument("-i", action="store", dest="input_dir", default="null",
+                        help="A directory to store a group of files"
+                             "default:need [samtools depth XXX > xxx.txt] result files;"
+                             "when '--kallisto', need fastq files and fna file.")
+    parser.add_argument("-o", action="store", dest="output_dir", default="OUT",
                         help="A directory include output data(operon file).default:OUT")
     parser.add_argument("-g", action="store", dest="gff_file", default="null",
-                        help="The gff file of the prokaryote")
+                        help="The gff file of the prokaryote.")
     parser.add_argument("-p", action="store", dest="process_thread", default=1, type=int,
                         help="Specify the number of processing threads (CPUs).default:1")
-    parser.add_argument("-t", action="store", dest="threshold", default=0.6, type=int,
+    parser.add_argument("-t", action="store", dest="threshold", default=0.6, type=float,
                         help="the threshold in (-1,1)")
     advanced_argv.add_argument("-k", action="store", dest="kegg_id", default="null",
-                               help="The kegg id of the prokaryote")
+                               help="The kegg id of the prokaryote.(when '--auto_gff')")
     advanced_argv.add_argument("--auto_gff", action="store_true", dest="auto_gff", default=False,
                                help="Auto download gff_file from NCBI Database")
     advanced_argv.add_argument("--person", action="store_true", dest="person", default=False,
                                help="Build co-expression matrix with person correlation")
     advanced_argv.add_argument("--spearman", action="store_true", dest="spearman", default=False,
                                help="Build co-expression matrix with spearman correlation")
+    advanced_argv.add_argument("--kallisto", action="store_true", dest="kallisto", default=False,
+                               help="Build expression matrix with kallisto result")
     advanced_argv.add_argument("-v", "--version", action="version", version="operondemmo-" + self_version)
     if len(argv) == 1:
         print(parser.print_help())
@@ -88,125 +92,92 @@ def starting(args):
             co_expression_method = 2
         else:
             co_expression_method = 0
-    if args.input_files != "null":
-        depth_files = load_from_input_files(args.input_files)
-        check_input_file(depth_files)
+    if args.input_dir[-1] != "/":
+        input_dir = args.input_dir + "/"
     else:
-        print("NEEDED INPUT_FILES.PLEASE check your input with option '-i'")
-        return
+        input_dir = args.input_dir
     if args.threshold > 1 or args.threshold < -1:
         print("IT CANNOT BE:", args.threshold, "PLEASE check your input with option '-t'")
         return
-    if args.output_path[-1] != "/":
-        output_path = args.output_path + "/"
+    if args.output_dir[-1] != "/":
+        output_dir = args.output_dir + "/"
     else:
-        output_path = args.output_path
-    if not os.path.exists(output_path):
-        os.system("mkdir " + output_path)
-    operon_predict(args.threshold, depth_files, output_path, gff_file_path, args.process_thread,
-                   co_expression_method)
+        output_dir = args.output_dir
+    if not os.path.exists(output_dir):
+        os.system("mkdir " + output_dir)
+    operon_predict(args.threshold, input_dir, output_dir, gff_file_path,
+                   co_expression_method, args.kallisto, args.process_thread)
 
 
-def operon_predict(threshold, depth_files, output_path, gff_file_path, p, co_expression_method):
+def operon_predict(threshold, input_dir, output_dir, gff_file_path, co_expression_method, kallisto, p):
     # simple_gff_file_information
     print("from your gff file to get [gene_locus_tag, start, stop, strand]...")
-    simple_gff_path = generate_simple_gff(gff_file_path, output_path)
+    simple_gff_path = generate_simple_gff(gff_file_path, output_dir)
     gene_pos_dict, gene_strand_dict = get_gene_pos_strand(simple_gff_path)
     final_gene_strand, final_gene_index, final_gene_sort = \
         from_simple_gff_information_to_get(gene_pos_dict, gene_strand_dict)
-    print("done\nfrom your samtools_depth result files to get tpm_co_expression_matrix...\n"
-          "it would be cost few minutes, please waiting...")
-    # matrix_co_expression
-    matrix_i_j = from_depth_file_to_get_co_matrix_co_expression(depth_files, gene_pos_dict, co_expression_method)
+
+    if kallisto:
+        print("done\nRunning kallisto ...")
+        print("from your fastq files to get tpm_co_expression_matrix...\n"
+              "it would be cost few minutes, please waiting...")
+        matrix_i_j = from_fastq_file_to_get_co_matrix_co_expression(input_dir, output_dir,
+                                                                    gene_pos_dict, co_expression_method, p)
+    else:
+        print("done\nfrom your samtools_depth result files to get tpm_co_expression_matrix...\n"
+              "it would be cost few minutes, please waiting...")
+        # matrix_co_expression
+        matrix_i_j = from_depth_file_to_get_co_matrix_co_expression(input_dir, gene_pos_dict, co_expression_method, p)
     # numpy.savetxt(output_path + "matrix.txt", matrix_i_j, fmt="%.8f")
+
     print("done\ngamma_domain clustering...")
     # hierarchical_cluster
-    result_file = output_path + "operon.txt"
+    result_file = output_dir + "operon.txt"
     get_result_by_clustering2(result_file, final_gene_strand, final_gene_index, final_gene_sort, matrix_i_j, threshold)
     print("done")
     print("PLEASE open your output_path:", result_file)
 
 
-def read_depth_file(depth_file):
-    file_content = open(depth_file, 'r').read().strip()
-    content_list = file_content.split("\n")
-    count_list = []
-    for line in content_list:
-        tmp_content = line.split("\t")
-        count_list.append(tmp_content[-1])
-    # print(len(count_list))
-    return count_list
+def from_depth_file_to_get_co_matrix_co_expression(depth_files, gene_pos_dict, method, p):
+    depth_files = load_from_input_files(depth_files)
+    check_input_file(depth_files)
 
-
-def compute_tpm(matrix_a, gene_pos_dict):
     gene_sort = sorted_gene(gene_pos_dict)
-    count_matrix = numpy.array(matrix_a).astype('int').T
-    # print(count_matrix.shape[0],count_matrix.shape[1])
-    condition_num = count_matrix.shape[1]
-    i = 0
-    for item in gene_sort:
-        sum_count = numpy.zeros([1, condition_num])
-        len_gene = 0
-        for (start, stop) in gene_pos_dict[item]:
-            len_gene = len_gene + stop - start
-            sum_count = sum_count + count_matrix[start - 1: stop, ...].sum(axis=0)
-        average_count = sum_count / len_gene
-        if i == 0:
-            gene_count_matrix = average_count
-        else:
-            gene_count_matrix = numpy.row_stack((gene_count_matrix, average_count))
-        i = i + 1
-    sum_genes_matrix = gene_count_matrix.sum(axis=0)
-    average_genes_matrix = gene_count_matrix / sum_genes_matrix
-    return average_genes_matrix
+
+    matrix_groups_by_condition = compute_expression(depth_files, gene_pos_dict, gene_sort, p)
+    matrix_co_expression = compute_co_expression(matrix_groups_by_condition, method)
+    return matrix_co_expression
 
 
-def compute_expression(depth_files, gene_pos_dict):
-    matrix_a = []
-    for each in depth_files:
-        count_list = read_depth_file(each)
-        matrix_a.append(count_list)
-    matrix_tpm = compute_tpm(matrix_a, gene_pos_dict)
-    return matrix_tpm
+def from_fastq_file_to_get_co_matrix_co_expression(input_files, output_path, gene_pos_dict, method, p):
+    check_kallisto()
+    fna_file, fastq_files = split_from_input(input_files)
+    check_input_file(fastq_files)
+    gene_sort = sorted_gene(gene_pos_dict)
+    kallisto_index = generate_kallisto_index(fna_file, gene_pos_dict, output_path, gene_sort)
+    tpm_files = get_tpm_from_kallisto_quant(kallisto_index, fastq_files, output_path, p)
+    tpm_matrix_by_condition = load_from_tpm_files(tpm_files)
+    matrix_co_expression = compute_co_expression(tpm_matrix_by_condition, method)
+    return matrix_co_expression
 
 
-def from_depth_file_to_get_co_matrix_co_expression(depth_files, gene_pos_dict, method):
-    begin = datetime.datetime.now()
-    matrix_groups_by_condition = compute_expression(depth_files, gene_pos_dict)
-    end = datetime.datetime.now()
-    print("time: compute_tpm,", end - begin)
+def compute_co_expression(expression_matrix, method):
+    begin = time.time()
     if method == 0:
-        begin = datetime.datetime.now()
-        matrix_c_i_j = compute_co_expression_by_c_i_j(matrix_groups_by_condition)
-        end = datetime.datetime.now()
+        matrix_c_i_j = compute_co_expression_by_c_i_j(expression_matrix)
+        end = time.time()
         print("time: compute_co_expression_matrix,", end - begin)
         return matrix_c_i_j
     elif method == 1:
-        begin = datetime.datetime.now()
-        matrix_c_person = compute_co_expression_by_person(matrix_groups_by_condition)
-        end = datetime.datetime.now()
+        matrix_c_person = compute_co_expression_by_person(expression_matrix)
+        end = time.time()
         print("time: compute_co_expression_matrix,", end - begin)
         return matrix_c_person
     else:
-        begin = datetime.datetime.now()
-        matrix_c_spearman = compute_co_expression_by_spearman(matrix_groups_by_condition)
-        end = datetime.datetime.now()
+        matrix_c_spearman = compute_co_expression_by_spearman(expression_matrix)
+        end = time.time()
         print("time: compute_co_expression_matrix,", end - begin)
         return matrix_c_spearman
-
-
-def check_input_file(depth_files):
-    num_depth_files = len(depth_files)
-    if num_depth_files <= 1:
-        print("need more condition")
-        sys.exit(1)
-
-
-def load_from_input_files(input_files):
-    depth_files = []
-    for each_file in os.listdir(input_files):
-        depth_files.append(input_files + each_file)
-    return depth_files
 
 
 if __name__ == "__main__":
