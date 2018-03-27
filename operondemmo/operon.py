@@ -7,7 +7,7 @@ import os
 from operondemmo.co_expression_matrix.c_i_j import compute_co_expression_by_c_i_j
 from operondemmo.co_expression_matrix.person_i_j import compute_co_expression_by_person
 from operondemmo.co_expression_matrix.spearman_i_j import compute_co_expression_by_spearman
-from operondemmo.hierarchical_cluster.gamma_domain import get_result_by_clustering, get_result_by_clustering2
+from operondemmo.cluster_or_classify_method.gamma_domain import get_result_by_clustering, get_result_by_clustering2
 from operondemmo.input_file_handle.handle_gff import auto_download, generate_simple_gff, \
     get_gene_pos_strand, from_simple_gff_information_to_get, sorted_gene
 from operondemmo.input_file_handle.handle_input import load_from_input_files, check_input_file, compute_expression
@@ -49,6 +49,9 @@ def prepare(argv):
                         help="Specify the number of processing threads (CPUs).default:1")
     parser.add_argument("-t", action="store", dest="threshold", default=0.6, type=float,
                         help="the threshold in (-1,1)")
+    parser.add_argument("-m", action="store", dest="method", default="GD",
+                        help="the method to generate result file.default:GD(gamma_domain)."
+                             "option:GD(gamma_domain);NB(naive_bayes)")
     advanced_argv.add_argument("-k", action="store", dest="kegg_id", default="null",
                                help="The kegg id of the prokaryote.(when '--auto_gff')")
     advanced_argv.add_argument("--auto_gff", action="store_true", dest="auto_gff", default=False,
@@ -106,10 +109,10 @@ def starting(args):
     if not os.path.exists(output_dir):
         os.system("mkdir " + output_dir)
     operon_predict(args.threshold, input_dir, output_dir, gff_file_path,
-                   co_expression_method, args.kallisto, args.process_thread)
+                   co_expression_method, args.kallisto, args.process_thread, args.method)
 
 
-def operon_predict(threshold, input_dir, output_dir, gff_file_path, co_expression_method, kallisto, p):
+def operon_predict(threshold, input_dir, output_dir, gff_file_path, co_expression_method, kallisto, p, result_method):
     # simple_gff_file_information
     print("from your gff file to get [gene_locus_tag, start, stop, strand]...")
     simple_gff_path = generate_simple_gff(gff_file_path, output_dir)
@@ -117,6 +120,7 @@ def operon_predict(threshold, input_dir, output_dir, gff_file_path, co_expressio
     final_gene_strand, final_gene_index, final_gene_sort = \
         from_simple_gff_information_to_get(gene_pos_dict, gene_strand_dict)
 
+    # co_expression_matrix
     if kallisto:
         print("done\nRunning kallisto ...")
         print("from your fastq files to get tpm_co_expression_matrix...\n"
@@ -130,10 +134,15 @@ def operon_predict(threshold, input_dir, output_dir, gff_file_path, co_expressio
         matrix_i_j = from_depth_file_to_get_co_matrix_co_expression(input_dir, gene_pos_dict, co_expression_method, p)
     # numpy.savetxt(output_path + "matrix.txt", matrix_i_j, fmt="%.8f")
 
-    print("done\ngamma_domain clustering...")
-    # hierarchical_cluster
+    # cluster_or_classify_method
     result_file = output_dir + "operon.txt"
-    get_result_by_clustering2(result_file, final_gene_strand, final_gene_index, final_gene_sort, matrix_i_j, threshold)
+    if result_method == "GD":
+        print("done\ngamma_domain clustering...")
+        get_result_by_clustering2(result_file, final_gene_strand, final_gene_index, final_gene_sort, matrix_i_j, threshold)
+    elif result_method == "NB":
+        pass
+    else:
+        pass
     print("done")
     print("PLEASE open your output_path:", result_file)
 
