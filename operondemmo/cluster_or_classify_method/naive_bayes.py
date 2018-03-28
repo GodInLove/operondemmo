@@ -45,3 +45,26 @@ def kernel_function(bandwidth, bin_size, samples, x_min, x_max):
     return estimation
 
 
+def get_distance_distribution(gene_pos, gene_strand):
+    gene_pos_list = []
+    for key in gene_pos:
+        for (start, stop) in gene_pos[key]:
+            gene_pos_list.append((key, (start, stop)))
+    gene_pos_list = sorted(gene_pos_list, key=lambda x: x[1][0])
+    i = 1
+    same_direction = []
+    opposite_direction = []
+    while i < len(gene_pos_list):
+        length = gene_pos_list[i][1][0] - gene_pos_list[i - 1][1][1]
+        if gene_strand[gene_pos_list[i][0]] == gene_strand[gene_pos_list[i - 1][0]]:
+            same_direction.append(length)
+        else:
+            opposite_direction.append(length)
+    distance_distribution = kernel_function(30, 1, same_direction, -50, 200)
+    return distance_distribution
+
+
+def get_co_expression_distribution(matrix_a):
+    co_expression_list = matrix_a.diagonal(-1).tolist()
+    co_distribution = kernel_function(5, 1)
+    return co_expression_list

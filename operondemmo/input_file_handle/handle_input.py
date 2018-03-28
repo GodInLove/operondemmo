@@ -39,7 +39,7 @@ def compute_tpm(matrix_a, gene_pos_dict, gene_sort):
         sum_count = numpy.zeros([1, condition_num])
         len_gene = 0
         for (start, stop) in gene_pos_dict[item]:
-            len_gene = len_gene + stop - start
+            len_gene = len_gene + stop - start + 1
             sum_count = sum_count + count_matrix[start - 1: stop, ...].sum(axis=0)
         average_count = sum_count / len_gene
         if i == 0:
