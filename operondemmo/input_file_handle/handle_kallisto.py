@@ -132,6 +132,7 @@ def load_from_tpm_files(tpm_files):
             tmp_content = line.split("\t")
             tmp_matrix[-1].append(tmp_content[-1])
     tmp_matrix = numpy.array(tmp_matrix).astype('float64').T
+    print(tmp_matrix.shape[0], tmp_matrix.shape[1])
     return tmp_matrix
 
 

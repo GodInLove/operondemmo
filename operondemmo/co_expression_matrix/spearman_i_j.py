@@ -2,7 +2,7 @@ import numpy
 import pandas
 
 
-def get_person_by_condition(matrix_a):
+def get_spearman_by_condition(matrix_a):
     condition_num = matrix_a.shape[1]
     print("condition_num:", condition_num)
     gene_num = matrix_a.shape[0]
@@ -14,7 +14,7 @@ def get_person_by_condition(matrix_a):
 
 
 def compute_co_expression_by_spearman(matrix_a):
-    matrix_condition_s_v = get_person_by_condition(matrix_a)
+    matrix_condition_s_v = get_spearman_by_condition(matrix_a)
     return matrix_condition_s_v
 
 
