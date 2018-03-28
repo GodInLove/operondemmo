@@ -26,17 +26,24 @@ def split_from_input(input_files):
     if fna_file == "":
         print("need .fna file.")
         sys.exit(1)
-    tmp_tag = ""
     fastq_files = []
     for each_ in all_files:
-        tmp_each = each_.split(".fastq")[0][:-2]
-        # print(tmp_each)
-        if tmp_each == tmp_tag:
-            fastq_files[-1] = fastq_files[-1] + " " + each_
-        else:
-            fastq_files.append(each_)
-            tmp_tag = tmp_each
-    # print(fastq_files)
+        tmp_each = each_.split("/")[-1]
+        tmp_each2 = tmp_each.split("_")[0]
+        if tmp_each2 not in fastq_files:
+            fastq_files.append(tmp_each2)
+    if ".gz" in all_files[0]:
+        i = 0
+        while i < len(fastq_files):
+            fastq_files[i] = input_files + fastq_files[i] + "_1.fastq.gz " \
+                             + input_files + fastq_files[i] + "_2.fastq.gz"
+            i = i + 1
+    else:
+        i = 0
+        while i < len(fastq_files):
+            fastq_files[i] = input_files + fastq_files[i] + "_1.fastq " + input_files + fastq_files[i] + "_2.fastq"
+            i = i + 1
+    print(fastq_files)
     # print(fna_file, type(fna_file))
     return fna_file, fastq_files
 
@@ -76,7 +83,7 @@ def frg_fna_according_to_gene_pos(fna_file, fna_path, gene_pos_dict, gene_sort):
         for (start, stop) in gene_pos_dict[gene]:
             fna_frg_list[-1] = fna_frg_list[-1] + fna_str[start - 1:stop]
         fna_frg_fp.write(to_fasta(gene, fna_frg_list[-1]) + "\n")
-    print(len(fna_frg_list))
+    # print(len(fna_frg_list))
     fna_frg_fp.close()
 
 
