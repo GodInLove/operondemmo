@@ -200,12 +200,12 @@ if __name__ == "__main__":
     tmp_out_path = path + "g_d_out_22/"
     tmp_tp_fp_file = path + "tp_fp_22.txt"
     tmp_roc_file_path = path + "tpr_fpr_22.txt"
-    # if not os.path.exists(tmp_roc_file_path):
-    #     tpr_22, fpr_22, pre_22 = kallisto_roc_curve(eco_simple_gff, eco_input_files, co_expression_method, tmp_out_path,
-    #                                                 p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path,
-    #                                                 threshold_list)
-    # else:
-    #     tpr_22, fpr_22, pre_22 = roc_curve_from_file(tmp_roc_file_path)
+    if not os.path.exists(tmp_roc_file_path):
+        tpr_22, fpr_22, pre_22 = kallisto_roc_curve(eco_simple_gff, eco_input_files, co_expression_method, tmp_out_path,
+                                                    p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path,
+                                                    threshold_list)
+    else:
+        tpr_22, fpr_22, pre_22 = roc_curve_from_file(tmp_roc_file_path)
 
     tmp_out_path = path + "g_d_out_1/"
     co_expression_method = 1
@@ -237,7 +237,7 @@ if __name__ == "__main__":
     plt.plot(fpr_2, tpr_2, label="spearman", linewidth=0.25, color="blue", linestyle="dashed")
     plt.plot(fpr_00, tpr_00, label="c_i_j_k", linewidth=0.25, color="red", linestyle="solid")
     plt.plot(fpr_11, tpr_11, label="person_k", linewidth=0.25, color="green", linestyle="solid")
-    # plt.plot(fpr_22, tpr_22, label="spearman_k", linewidth=0.25, color="blue", linestyle="solid")
+    plt.plot(fpr_22, tpr_22, label="spearman_k", linewidth=0.25, color="blue", linestyle="solid")
     plt.legend(loc=4)
     plt.savefig("roc_curve.svg", format="svg")
 
@@ -253,6 +253,6 @@ if __name__ == "__main__":
     plt.plot(tpr_2, pre_2, label="spearman", linewidth=0.25, color="blue", linestyle="dashed")
     plt.plot(tpr_00, pre_00, label="c_i_j_k", linewidth=0.25, color="red", linestyle="solid")
     plt.plot(tpr_11, pre_11, label="person_k", linewidth=0.25, color="green", linestyle="solid")
-    # plt.plot(tpr_22, pre_22, label="spearman_k", linewidth=0.25, color="blue", linestyle="solid")
+    plt.plot(tpr_22, pre_22, label="spearman_k", linewidth=0.25, color="blue", linestyle="solid")
     plt.legend(loc=1)
     plt.savefig("pre_rec.svg", format="svg")
