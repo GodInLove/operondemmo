@@ -1,0 +1,13 @@
+{
+	"n_targets": 4498,
+	"n_bootstraps": 0,
+	"n_processed": 45315305,
+	"n_pseudoaligned": 33864195,
+	"n_unique": 2333084,
+	"p_pseudoaligned": 74.7,
+	"p_unique": 5.1,
+	"kallisto_version": "0.44.0",
+	"index_version": 10,
+	"start_time": "Wed Mar 28 20:54:56 2018",
+	"call": "kallisto quant -i OUT/tmp/frg_eco.idx -o OUT/tmp/2_out/ /home/lyd/document/2018.1/gamma_domain/eco_fastqs/SRR6322037_1.fastq.gz /home/lyd/document/2018.1/gamma_domain/eco_fastqs/SRR6322037_2.fastq.gz"
+}

@@ -132,7 +132,6 @@ def operon_predict(threshold, input_dir, output_dir, gff_file_path, co_expressio
               "it would be cost few minutes, please waiting...")
         # matrix_co_expression
         matrix_i_j = from_depth_file_to_get_co_matrix_co_expression(input_dir, gene_pos_dict, co_expression_method, p)
-    # numpy.savetxt(output_path + "matrix.txt", matrix_i_j, fmt="%.8f")
 
     # cluster_or_classify_method
     result_file = output_dir + "operon.txt"
@@ -175,17 +174,17 @@ def compute_co_expression(expression_matrix, method):
     if method == 0:
         matrix_c_i_j = compute_co_expression_by_c_i_j(expression_matrix)
         end = time.time()
-        print("time: compute_co_expression_matrix,", end - begin)
+        print("time: compute_co_expression_matrix: %.2f" % (end - begin))
         return matrix_c_i_j
     elif method == 1:
         matrix_c_person = compute_co_expression_by_person(expression_matrix)
         end = time.time()
-        print("time: compute_co_expression_matrix,", end - begin)
+        print("time: compute_co_expression_matrix: %.2f" % (end - begin))
         return matrix_c_person
     else:
         matrix_c_spearman = compute_co_expression_by_spearman(expression_matrix)
         end = time.time()
-        print("time: compute_co_expression_matrix,", end - begin)
+        print("time: compute_co_expression_matrix: %.2f" % (end - begin))
         return matrix_c_spearman
 
 

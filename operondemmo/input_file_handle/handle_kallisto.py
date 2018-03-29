@@ -3,6 +3,7 @@ from multiprocessing import Pool
 import sys
 
 import numpy
+import time
 
 from operondemmo.version import kallisto_out_file
 
@@ -43,7 +44,7 @@ def split_from_input(input_files):
         while i < len(fastq_files):
             fastq_files[i] = input_files + fastq_files[i] + "_1.fastq " + input_files + fastq_files[i] + "_2.fastq"
             i = i + 1
-    print(fastq_files)
+    # print(fastq_files)
     # print(fna_file, type(fna_file))
     return fna_file, fastq_files
 
@@ -113,10 +114,13 @@ def get_tpm_from_kallisto_quant(kallisto_index, fastq_files, output_path, p):
     for i in range(len(fastq_files)):
         kallisto_out.append(tmp_path + str(i) + "_out/")
     kallisto_index_list = [kallisto_index] * len(fastq_files)
+    start = time.time()
     pool = Pool(p)
     tpm_files = pool.starmap(run_kallisto_quant_paired, zip(fastq_files, kallisto_index_list, kallisto_out))
     pool.close()
     pool.join()
+    end = time.time()
+    print("time: compute tpm: %.2f" % (end - start))
     return tpm_files
 
 
@@ -132,7 +136,8 @@ def load_from_tpm_files(tpm_files):
             tmp_content = line.split("\t")
             tmp_matrix[-1].append(tmp_content[-1])
     tmp_matrix = numpy.array(tmp_matrix).astype('float64').T
-    print(tmp_matrix.shape[0], tmp_matrix.shape[1])
+    # numpy.savetxt("/home/lyd/document/2018.1/gamma_domain/kallisto_matrix.txt", tmp_matrix, fmt="%.8f")
+    # print(tmp_matrix.shape[0], tmp_matrix.shape[1])
     return tmp_matrix
 
 

@@ -84,5 +84,6 @@ def compute_expression(depth_files, gene_pos_dict, gene_sort, p):
     #     matrix_a.append(count_list)
     matrix_tpm = compute_tpm(matrix_a, gene_pos_dict, gene_sort)
     end = time.time()
-    print("compute tpm:", end - start)
+    print("time: compute tpm: %.2f" % (end - start))
+    numpy.savetxt("/home/lyd/document/2018.1/gamma_domain/my_matrix.txt", matrix_tpm, fmt="%.8f")
     return matrix_tpm
