@@ -1,10 +1,9 @@
-import datetime
 import os
 import matplotlib.pyplot as plt
 import numpy
-from operondemmo.cluster_or_classify_method.gamma_domain import get_result_by_clustering, get_result_by_clustering2
+from operondemmo.cluster_or_classify_method.gamma_domain import get_result_by_clustering2
 
-from operondemmo.input_file_handle.handle_gff import get_gene_pos_strand, sorted_gene, \
+from operondemmo.input_file_handle.handle_gff import get_gene_pos_strand, \
     from_simple_gff_information_to_get
 from operondemmo.operon import from_depth_file_to_get_co_matrix_co_expression, \
     from_fastq_file_to_get_co_matrix_co_expression
@@ -62,8 +61,7 @@ def get_list_from_file(file_path):
     return f_p_out_sort
 
 
-def roc_curve(simple_gff, depth_files, method, out_path, p_d_list, n_d_list, tp_fp_file, roc_file_path, t_list):
-    generate_output_files(simple_gff, depth_files, method, out_path, t_list)
+def roc_curve(out_path, p_d_list, n_d_list, tp_fp_file, roc_file_path):
     list_files = os.listdir(out_path)
     list_files = sorted(list_files)
     tp_fp_file_fp = open(tp_fp_file, 'w')
@@ -107,39 +105,6 @@ def generate_kallisto_output_files(simple_gff, input_files, method, out_path, t_
         i_iter = i_iter + 1
 
 
-def kallisto_roc_curve(simple_gff, depth_files, method, out_path, p_d_list, n_d_list, tp_fp_file, roc_file_path,
-                       t_list):
-    generate_kallisto_output_files(simple_gff, depth_files, method, out_path, t_list)
-    print(out_path)
-    os.system("rm -r -f " + out_path + "tmp")
-    list_files = os.listdir(out_path)
-    list_files = sorted(list_files)
-    tp_fp_file_fp = open(tp_fp_file, 'w')
-    tpr_fpr_file_fp = open(roc_file_path, 'w')
-    p = len(p_d_list)
-    n = len(n_d_list)
-    n = 20000
-    for _file in list_files:
-        print(_file)
-        tp = compute_n(p_d_list, out_path + _file)
-        # fp = compute_n(n_d_list, out_path + _file)
-        fp = compute_fp(tp, out_path + _file)
-        tp_fp_file_fp.write(str(tp) + "\t" + str(fp) + "\n")
-        print(tp, fp)
-        tpr = tp / p
-        fpr = fp / n
-        pre = tp / (tp + fp)
-        # print(tpr, fpr, pre)
-        tpr_fpr_file_fp.write(str(tpr) + "\t" + str(fpr) + "\t" + str(pre) + "\n")
-    tp_fp_file_fp.close()
-    tpr_fpr_file_fp.close()
-    matrix_a = numpy.loadtxt(roc_file_path)
-    tpr = matrix_a[..., 0].tolist()
-    fpr = matrix_a[..., 1].tolist()
-    pre = matrix_a[..., 2].tolist()
-    return tpr, fpr, pre
-
-
 def roc_curve_from_file(roc_file):
     matrix_a = numpy.loadtxt(roc_file)
     tpr = matrix_a[..., 0].tolist()
@@ -166,65 +131,52 @@ if __name__ == "__main__":
     roc_path = "/home/lyd/document/2018.1/roc/"
     positive_data = roc_path + "positiveData.txt"
     negative_data = roc_path + "negativeData.txt"
+    threshold_list = get_t_list(-1, 1, 100)
+    p_d_sort_list = get_list_from_file(positive_data)
+    n_d_sort_list = get_list_from_file(negative_data)
 
     tmp_out_path = path + "g_d_out/"
     co_expression_method = 0
     tmp_tp_fp_file = path + "tp_fp.txt"
     tmp_roc_file_path = path + "tpr_fpr.txt"
-    threshold_list = get_t_list(-1, 1, 100)
-    p_d_sort_list = get_list_from_file(positive_data)
-    n_d_sort_list = get_list_from_file(negative_data)
-    if not os.path.exists(tmp_roc_file_path):
-        tpr_0, fpr_0, pre_0 = roc_curve(eco_simple_gff, eco_depth_files, co_expression_method, tmp_out_path,
-                                        p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path, threshold_list)
-    else:
-        tpr_0, fpr_0, pre_0 = roc_curve_from_file(tmp_roc_file_path)
+    generate_output_files(eco_simple_gff, eco_depth_files, co_expression_method, tmp_out_path, threshold_list)
+    tpr_0, fpr_0, pre_0 = roc_curve(tmp_out_path, p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path)
+
     tmp_out_path = path + "g_d_out_00/"
     tmp_tp_fp_file = path + "tp_fp_00.txt"
     tmp_roc_file_path = path + "tpr_fpr_00.txt"
-    if not os.path.exists(tmp_roc_file_path):
-        tpr_00, fpr_00, pre_00 = kallisto_roc_curve(eco_simple_gff, eco_input_files, co_expression_method, tmp_out_path,
-                                                    p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path,
-                                                    threshold_list)
-    else:
-        tpr_00, fpr_00, pre_00 = roc_curve_from_file(tmp_roc_file_path)
-    tmp_out_path = path + "g_d_out_2/"
-    co_expression_method = 2
-    tmp_tp_fp_file = path + "tp_fp_2.txt"
-    tmp_roc_file_path = path + "tpr_fpr_2.txt"
-    if not os.path.exists(tmp_roc_file_path):
-        tpr_2, fpr_2, pre_2 = roc_curve(eco_simple_gff, eco_depth_files, co_expression_method, tmp_out_path,
-                                        p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path, threshold_list)
-    else:
-        tpr_2, fpr_2, pre_2 = roc_curve_from_file(tmp_roc_file_path)
-    tmp_out_path = path + "g_d_out_22/"
-    tmp_tp_fp_file = path + "tp_fp_22.txt"
-    tmp_roc_file_path = path + "tpr_fpr_22.txt"
-    if not os.path.exists(tmp_roc_file_path):
-        tpr_22, fpr_22, pre_22 = kallisto_roc_curve(eco_simple_gff, eco_input_files, co_expression_method, tmp_out_path,
-                                                    p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path,
-                                                    threshold_list)
-    else:
-        tpr_22, fpr_22, pre_22 = roc_curve_from_file(tmp_roc_file_path)
+    generate_kallisto_output_files(eco_simple_gff, eco_input_files, co_expression_method, tmp_out_path, threshold_list)
+    os.system("rm -r -f " + tmp_out_path + "tmp")
+    tpr_00, fpr_00, pre_00 = roc_curve(tmp_out_path, p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path)
 
     tmp_out_path = path + "g_d_out_1/"
     co_expression_method = 1
     tmp_tp_fp_file = path + "tp_fp_1.txt"
     tmp_roc_file_path = path + "tpr_fpr_1.txt"
-    if not os.path.exists(tmp_roc_file_path):
-        tpr_1, fpr_1, pre_1 = roc_curve(eco_simple_gff, eco_depth_files, co_expression_method, tmp_out_path,
-                                        p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path, threshold_list)
-    else:
-        tpr_1, fpr_1, pre_1 = roc_curve_from_file(tmp_roc_file_path)
+    generate_output_files(eco_simple_gff, eco_depth_files, co_expression_method, tmp_out_path, threshold_list)
+    tpr_1, fpr_1, pre_1 = roc_curve(tmp_out_path, p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path)
+
     tmp_out_path = path + "g_d_out_11/"
     tmp_tp_fp_file = path + "tp_fp_11.txt"
     tmp_roc_file_path = path + "tpr_fpr_11.txt"
-    if not os.path.exists(tmp_roc_file_path):
-        tpr_11, fpr_11, pre_11 = kallisto_roc_curve(eco_simple_gff, eco_input_files, co_expression_method, tmp_out_path,
-                                                    p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path,
-                                                    threshold_list)
-    else:
-        tpr_11, fpr_11, pre_11 = roc_curve_from_file(tmp_roc_file_path)
+    generate_kallisto_output_files(eco_simple_gff, eco_input_files, co_expression_method, tmp_out_path, threshold_list)
+    os.system("rm -r -f " + tmp_out_path + "tmp")
+    tpr_11, fpr_11, pre_11 = roc_curve(tmp_out_path, p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path)
+
+    tmp_out_path = path + "g_d_out_2/"
+    co_expression_method = 2
+    tmp_tp_fp_file = path + "tp_fp_2.txt"
+    tmp_roc_file_path = path + "tpr_fpr_2.txt"
+    generate_output_files(eco_simple_gff, eco_depth_files, co_expression_method, tmp_out_path, threshold_list)
+    tpr_2, fpr_2, pre_2 = roc_curve(tmp_out_path, p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path)
+
+    tmp_out_path = path + "g_d_out_22/"
+    tmp_tp_fp_file = path + "tp_fp_22.txt"
+    tmp_roc_file_path = path + "tpr_fpr_22.txt"
+    generate_kallisto_output_files(eco_simple_gff, eco_input_files, co_expression_method, tmp_out_path, threshold_list)
+    os.system("rm -r -f " + tmp_out_path + "tmp")
+    tpr_22, fpr_22, pre_22 = roc_curve(tmp_out_path, p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path)
+
     plt.figure(dpi=1000)
     plt.style.use('ggplot')
     plt.title("ROC curve of gamma_domain algorithm")
