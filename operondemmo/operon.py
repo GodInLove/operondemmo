@@ -153,7 +153,7 @@ def from_depth_file_to_get_co_matrix_co_expression(depth_files, gene_pos_dict, m
     gene_sort = sorted_gene(gene_pos_dict)
 
     matrix_groups_by_condition = compute_expression(depth_files, gene_pos_dict, gene_sort, p)
-    matrix_co_expression = compute_co_expression(matrix_groups_by_condition, method)
+    matrix_co_expression = compute_co_expression(matrix_groups_by_condition, method, p)
     return matrix_co_expression
 
 
@@ -165,11 +165,11 @@ def from_fastq_file_to_get_co_matrix_co_expression(input_files, output_path, gen
     kallisto_index = generate_kallisto_index(fna_file, gene_pos_dict, output_path, gene_sort)
     tpm_files = get_tpm_from_kallisto_quant(kallisto_index, fastq_files, output_path, p)
     tpm_matrix_by_condition = load_from_tpm_files(tpm_files)
-    matrix_co_expression = compute_co_expression(tpm_matrix_by_condition, method)
+    matrix_co_expression = compute_co_expression(tpm_matrix_by_condition, method, p)
     return matrix_co_expression
 
 
-def compute_co_expression(expression_matrix, method):
+def compute_co_expression(expression_matrix, method, p):
     begin = time.time()
     if method == 0:
         matrix_c_i_j = compute_co_expression_by_c_i_j(expression_matrix)
@@ -182,7 +182,7 @@ def compute_co_expression(expression_matrix, method):
         print("time: compute_co_expression_matrix: %.2f" % (end - begin))
         return matrix_c_person
     else:
-        matrix_c_spearman = compute_co_expression_by_spearman(expression_matrix)
+        matrix_c_spearman = compute_co_expression_by_spearman(expression_matrix, p)
         end = time.time()
         print("time: compute_co_expression_matrix: %.2f" % (end - begin))
         return matrix_c_spearman
