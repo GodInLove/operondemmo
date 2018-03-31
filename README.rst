@@ -63,15 +63,18 @@ Quick start
 
 .. code-block:: console
 
-   $ mkdir test
-   $ wget http://lyd.ourblogs.me/operondemmo/test/count.tar.gz
-   $ wget http://lyd.ourblogs.me/operondemmo/test/gff/eco.gff
-   $ cd tar -zxf count.tar.gz
-   $ rm -f count.tar.gz
-   $ operondemmo -i count -g eco.gff
+   $ operondemmo -i input_dir -f fna_file_path -g gff_file_path
+
 
 
 Outputs: ``test/OUT/operon.txt``
+
+Or:
+
+.. code-block:: console
+
+   $ operondemmo -i input_dir -f fna_file_path -g gff_file_path -o out_dir -t threshold
+
 
 Basic Parameters
 ^^^^^^^^^^^^^^^^^^^^
@@ -86,38 +89,33 @@ Basic Parameters
     A directory include output data(operon file).
 -g
     **GFF_FILE:**
-    The gff file of the prokaryote
+    The gff file of the prokaryote.
 -t
-    **THRESHOLD**
-    the threshold in (-1,1)
+    **THRESHOLD:**
+    the threshold in (-1,1).
+-f
+    **FNA_FILE:**
+    The fna file of the prokaryote genome.
+-p
+    **PROCESS_NUM**
+    Specify the number of processing threads.
 
 
 **INPUT_DIR:**
 
-default: [samtools depth] result files
-
-
-.. code-block:: console
-
-    example_count/
-      SRR6322033_count.txt
-      SRR6322035_count.txt
-      SRR6322037_count.txt
-      ...
-
-
-or when ``--kallisto``
 
 .. code-block:: console
 
    example_input/
-      eco.fna
-      SRR6322033_1.fastq.gz
-      SRR6322033_2.fastq.gz
-      SRR6322035_1.fastq.gz
-      SRR6322035_2.fastq.gz
-      SRR6322037_1.fastq.gz
-      SRR6322037_2.fastq.gz
+      c1/
+         SRR6322033_1.fastq.gz
+         SRR6322033_2.fastq.gz
+      c2/
+         SRR6322035_1.fastq.gz
+         SRR6322035_2.fastq.gz
+      c3/
+         SRR6322037_1.fastq.gz
+         SRR6322037_2.fastq.gz
       ...
 
 
@@ -127,17 +125,15 @@ Advanced Parameters
    Build co-expression matrix with person correlation
 --spearman
    Build co-expression matrix with spearman correlation
---kallisto
-   Build expression matrix with kallisto result
 
 
 *cite:*
  1. Junier I, Unal E B, Yus E, et al. Insights into the mechanisms of basal coordination of transcription using a genome-reduced bacterium[J]. Cell systems, 2016, 2(6): 391-401.
-
+ 2. Bray N L, Pimentel H, Melsted P, et al. Near-optimal probabilistic RNA-seq quantification[J]. Nature biotechnology, 2016, 34(5): 525.
 
 .. |PyPI version| image:: https://img.shields.io/pypi/v/operondemmo.svg?style=flat-square
    :target: https://pypi.python.org/pypi/operondemmo
 .. |Docs| image:: https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat-square
-   :target: https://github.com/GodInLove/operondemmo
+   :target: http://lyd.ourblogs.me/operondemmo/
 .. |License| image:: https://img.shields.io/aur/license/yaourt.svg?maxAge=2592000
    :target: https://github.com/GodInLove/operondemmo/blob/master/LICENSE.txt
