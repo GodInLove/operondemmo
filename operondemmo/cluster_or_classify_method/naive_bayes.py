@@ -104,15 +104,15 @@ def get_probability(gene_pos, gene_strand, sort_gene, matrix_a):
     same_direction, opposite_direction = get_distance_distribution(gene_pos, gene_strand, sort_gene)
     same_corr, opposite_corr = get_co_expression_distribution(matrix_a, gene_strand, sort_gene)
 
-    distance_x, distance_y = kernel_function(30, 1, same_direction, min(same_direction), max(same_direction) + 1)
+    distance_x, distance_y = kernel_function(30, 1, same_direction, -50, 201)
     p_d_x, p_d_y = compute_probability(distance_x, distance_y)
     op_distance_x, op_distance_y = kernel_function(30, 1, opposite_direction,
                                                    min(opposite_direction), max(opposite_direction) + 1)
     p_op_d_x, p_op_d_y = compute_probability(op_distance_x, op_distance_y)
 
-    co_x, co_y = kernel_function(5, 1, same_corr, min(same_corr), max(same_corr) + 1)
+    co_x, co_y = kernel_function(5, 1, same_corr, -20, 21)
     p_co_x, p_co_y = compute_probability(co_x, co_y)
-    op_co_x, op_co_y = kernel_function(5, 1, opposite_corr, min(opposite_corr), max(opposite_corr) + 1)
+    op_co_x, op_co_y = kernel_function(5, 1, opposite_corr, -20, 21)
     p_op_co_x, p_op_co_y = compute_probability(op_co_x, op_co_y)
     print(max(p_d_y), max(p_op_d_y))
     print(max(p_co_y), max(p_op_co_y))
@@ -124,18 +124,11 @@ def naive_bayes_classify(distance_i_j, co_i_j,
                          operon_prior, non_operon_prior):
     if distance_i_j not in p_d_x:
         return False
-    elif co_i_j not in p_co_x:
-        return False
     else:
         p_t = numpy.log(operon_prior) \
-              + numpy.log(p_d_y[p_d_x.index(distance_i_j)]) + numpy.log(p_co_y[p_co_x.index(co_i_j)])
-    if distance_i_j not in p_op_d_x:
-        return True
-    elif co_i_j not in p_op_co_x:
-        return True
-    else:
-        p_f = numpy.log(non_operon_prior) + numpy.log(p_op_d_y[p_op_d_x.index(distance_i_j)]) + numpy.log(
-            p_op_co_y[p_op_co_x.index(co_i_j)])
+          + numpy.log(p_d_y[p_d_x.index(distance_i_j)]) + numpy.log(p_co_y[p_co_x.index(co_i_j)])
+    p_f = numpy.log(non_operon_prior) \
+          + numpy.log(p_op_d_y[p_op_d_x.index(distance_i_j)]) + numpy.log(p_op_co_y[p_op_co_x.index(co_i_j)])
     if p_t >= p_f:
         return True
     else:
