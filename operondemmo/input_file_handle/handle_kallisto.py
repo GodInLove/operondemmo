@@ -16,6 +16,37 @@ def check_kallisto():
 
 
 def split_from_input(input_files):
+    fastq_files = []
+    all_file = []
+    for each_dir in os.listdir(input_files):
+        all_file.append(input_files + each_dir + "/")
+    for each_dir in all_file:
+        condition_files = []
+        condition_name = []
+        for each_file in os.listdir(each_dir):
+            condition_files.append(each_dir + each_file)
+        for each_file in condition_files:
+            tmp_each = each_file.split("/")[-1]
+            tmp_each2 = tmp_each.split("_")[0]
+            if tmp_each2 not in condition_name:
+                condition_name.append(tmp_each2)
+        if ".gz" in condition_files[0]:
+            i = 0
+            while i < len(condition_name):
+                condition_name[i] = each_dir + condition_name[i] + "_1.fastq.gz " \
+                                    + each_dir + condition_name[i] + "_2.fastq.gz"
+                i = i + 1
+        else:
+            i = 0
+            while i < len(condition_name):
+                condition_name[i] = each_dir + condition_name[i] + "_1.fastq " \
+                                    + each_dir + condition_name[i] + "_2.fastq"
+                i = i + 1
+        fastq_files.append(" ".join(condition_name))
+    return fastq_files
+
+
+def split_from_input_old(input_files):
     fna_file = ""
     all_files = []
     for each_file in os.listdir(input_files):
@@ -92,7 +123,8 @@ def generate_kallisto_index(fna_file, gene_pos_dict, output_path, gene_sort):
     tmp_path = output_path + "tmp/"
     fna_name = fna_file.split("/")[-1]
     fna_path = tmp_path + "frg_" + fna_name
-    frg_fna_according_to_gene_pos(fna_file, fna_path, gene_pos_dict, gene_sort)
+    if not os.path.exists(fna_path):
+        frg_fna_according_to_gene_pos(fna_file, fna_path, gene_pos_dict, gene_sort)
     kallisto_index = fna_path.split(".")[0] + ".idx"
     if not os.path.exists(kallisto_index):
         os.system("kallisto index -i " + kallisto_index + " " + fna_path)

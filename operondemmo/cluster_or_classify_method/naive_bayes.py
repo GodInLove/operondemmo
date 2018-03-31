@@ -31,7 +31,8 @@ def get_operon_prior(sort_gene, gene_strand):
 
 
 def kernel_function(bandwidth, bin_size, samples, x_min, x_max):
-    estimation = {}
+    estimation_y = []
+    estimation_x = []
     i = x_min
     while i <= x_max:
         _sum = 0
@@ -40,9 +41,10 @@ def kernel_function(bandwidth, bin_size, samples, x_min, x_max):
                 tmp = (i - j) / bandwidth
                 _sum = _sum + tmp * tmp
         value = _sum / (len(samples) * bandwidth)
-        estimation[i] = value
+        estimation_x.append(i)
+        estimation_y.append(value)
         i = i + bin_size
-    return estimation
+    return estimation_x, estimation_y
 
 
 def get_distance_distribution(gene_pos, gene_strand):
@@ -60,11 +62,14 @@ def get_distance_distribution(gene_pos, gene_strand):
             same_direction.append(length)
         else:
             opposite_direction.append(length)
-    distance_distribution = kernel_function(30, 1, same_direction, -50, 200)
-    return distance_distribution
+    distance_x, distance_y = kernel_function(30, 1, same_direction, -50, 200)
+    return distance_x, distance_y
 
 
 def get_co_expression_distribution(matrix_a):
     co_expression_list = matrix_a.diagonal(-1).tolist()
-    co_distribution = kernel_function(5, 1)
-    return co_expression_list
+    co_x, co_y = kernel_function(5, 1, co_expression_list, -20, 20)
+    return co_x, co_y
+
+
+

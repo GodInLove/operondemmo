@@ -12,7 +12,7 @@ from operondemmo.input_file_handle.handle_gff import auto_download, generate_sim
     get_gene_pos_strand, from_simple_gff_information_to_get, sorted_gene
 from operondemmo.input_file_handle.handle_input import load_from_input_files, check_input_file, compute_expression
 from operondemmo.input_file_handle.handle_kallisto import check_kallisto, split_from_input, generate_kallisto_index, \
-    get_tpm_from_kallisto_quant, load_from_tpm_files
+    get_tpm_from_kallisto_quant, load_from_tpm_files, split_from_input_old
 from operondemmo.version import version
 
 self_version = version
@@ -37,10 +37,12 @@ def prepare(argv):
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
 
     advanced_argv = parser.add_argument_group("ADVANCED OPTIONS")
+    # parser.add_argument("-i", action="store", dest="input_dir", default="null",
+    #                     help="A directory to store a group of files. need fastq files and fna file.")
     parser.add_argument("-i", action="store", dest="input_dir", default="null",
-                        help="A directory to store a group of files"
-                             "default:need [samtools depth XXX > xxx.txt] result files;"
-                             "when '--kallisto', need fastq files and fna file.")
+                        help="A directory to store a group of files. fastq files.")
+    parser.add_argument("-f", action="store", dest="fna_file", default="null",
+                        help="The fna file of the prokaryote genome.")
     parser.add_argument("-o", action="store", dest="output_dir", default="OUT",
                         help="A directory include output data(operon file).default:OUT")
     parser.add_argument("-g", action="store", dest="gff_file", default="null",
@@ -60,8 +62,8 @@ def prepare(argv):
                                help="Build co-expression matrix with person correlation")
     advanced_argv.add_argument("--spearman", action="store_true", dest="spearman", default=False,
                                help="Build co-expression matrix with spearman correlation")
-    advanced_argv.add_argument("--kallisto", action="store_true", dest="kallisto", default=False,
-                               help="Build expression matrix with kallisto result")
+    # advanced_argv.add_argument("--kallisto", action="store_true", dest="kallisto", default=False,
+    #                            help="Build expression matrix with kallisto result")
     advanced_argv.add_argument("-v", "--version", action="version", version="operondemmo-" + self_version)
     if len(argv) == 1:
         print(parser.print_help())
@@ -95,6 +97,11 @@ def starting(args):
             co_expression_method = 2
         else:
             co_expression_method = 0
+    if args.fna_file != "null":
+        fna_file_path = args.fna_file
+    else:
+        print("NEEDED FNA_FILE.PLEASE check your input with option '-f'")
+        return
     if args.input_dir[-1] != "/":
         input_dir = args.input_dir + "/"
     else:
@@ -108,11 +115,43 @@ def starting(args):
         output_dir = args.output_dir
     if not os.path.exists(output_dir):
         os.system("mkdir " + output_dir)
+    # operon_predict_old(args.threshold, input_dir, output_dir, gff_file_path,
+    #                    co_expression_method, args.kallisto, args.process_thread, args.method)
     operon_predict(args.threshold, input_dir, output_dir, gff_file_path,
-                   co_expression_method, args.kallisto, args.process_thread, args.method)
+                   co_expression_method, fna_file_path, args.process_thread, args.method)
 
 
-def operon_predict(threshold, input_dir, output_dir, gff_file_path, co_expression_method, kallisto, p, result_method):
+def operon_predict(threshold, input_dir, output_dir, gff_file_path, co_expression_method, fna_file_path, p,
+                   result_method):
+    # simple_gff_file_information
+    print("from your gff file to get [gene_locus_tag, start, stop, strand]...")
+    simple_gff_path = generate_simple_gff(gff_file_path, output_dir)
+    gene_pos_dict, gene_strand_dict = get_gene_pos_strand(simple_gff_path)
+    final_gene_strand, final_gene_index, final_gene_sort = \
+        from_simple_gff_information_to_get(gene_pos_dict, gene_strand_dict)
+
+    # co_expression_matrix
+    print("done\nRunning kallisto ...")
+    print("from your fastq files to get tpm_co_expression_matrix...\n"
+          "it would be cost few minutes, please waiting...")
+    matrix_i_j = from_fastq_file_to_get_co_matrix_co_expression(input_dir, fna_file_path, output_dir,
+                                                                gene_pos_dict, co_expression_method, p)
+    # cluster_or_classify_method
+    result_file = output_dir + "operon.txt"
+    if result_method == "GD":
+        print("done\ngamma_domain clustering...")
+        get_result_by_clustering2(result_file, final_gene_strand, final_gene_index, final_gene_sort, matrix_i_j,
+                                  threshold)
+    elif result_method == "NB":
+        pass
+    else:
+        pass
+    print("done")
+    print("PLEASE open your output_path:", result_file)
+
+
+def operon_predict_old(threshold, input_dir, output_dir, gff_file_path, co_expression_method, kallisto, p,
+                       result_method):
     # simple_gff_file_information
     print("from your gff file to get [gene_locus_tag, start, stop, strand]...")
     simple_gff_path = generate_simple_gff(gff_file_path, output_dir)
@@ -125,8 +164,8 @@ def operon_predict(threshold, input_dir, output_dir, gff_file_path, co_expressio
         print("done\nRunning kallisto ...")
         print("from your fastq files to get tpm_co_expression_matrix...\n"
               "it would be cost few minutes, please waiting...")
-        matrix_i_j = from_fastq_file_to_get_co_matrix_co_expression(input_dir, output_dir,
-                                                                    gene_pos_dict, co_expression_method, p)
+        matrix_i_j = from_fastq_file_to_get_co_matrix_co_expression_old(input_dir, output_dir,
+                                                                        gene_pos_dict, co_expression_method, p)
     else:
         print("done\nfrom your samtools_depth result files to get tpm_co_expression_matrix...\n"
               "it would be cost few minutes, please waiting...")
@@ -137,7 +176,8 @@ def operon_predict(threshold, input_dir, output_dir, gff_file_path, co_expressio
     result_file = output_dir + "operon.txt"
     if result_method == "GD":
         print("done\ngamma_domain clustering...")
-        get_result_by_clustering2(result_file, final_gene_strand, final_gene_index, final_gene_sort, matrix_i_j, threshold)
+        get_result_by_clustering2(result_file, final_gene_strand, final_gene_index, final_gene_sort, matrix_i_j,
+                                  threshold)
     elif result_method == "NB":
         pass
     else:
@@ -157,9 +197,21 @@ def from_depth_file_to_get_co_matrix_co_expression(depth_files, gene_pos_dict, m
     return matrix_co_expression
 
 
-def from_fastq_file_to_get_co_matrix_co_expression(input_files, output_path, gene_pos_dict, method, p):
+def from_fastq_file_to_get_co_matrix_co_expression(input_files, fna_file, output_path, gene_pos_dict, method, p):
     check_kallisto()
-    fna_file, fastq_files = split_from_input(input_files)
+    fastq_files = split_from_input(input_files)
+    check_input_file(fastq_files)
+    gene_sort = sorted_gene(gene_pos_dict)
+    kallisto_index = generate_kallisto_index(fna_file, gene_pos_dict, output_path, gene_sort)
+    tpm_files = get_tpm_from_kallisto_quant(kallisto_index, fastq_files, output_path, p)
+    tpm_matrix_by_condition = load_from_tpm_files(tpm_files)
+    matrix_co_expression = compute_co_expression(tpm_matrix_by_condition, method, p)
+    return matrix_co_expression
+
+
+def from_fastq_file_to_get_co_matrix_co_expression_old(input_files, output_path, gene_pos_dict, method, p):
+    check_kallisto()
+    fna_file, fastq_files = split_from_input_old(input_files)
     check_input_file(fastq_files)
     gene_sort = sorted_gene(gene_pos_dict)
     kallisto_index = generate_kallisto_index(fna_file, gene_pos_dict, output_path, gene_sort)
