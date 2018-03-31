@@ -62,13 +62,24 @@ def get_distance_distribution(gene_pos, gene_strand):
             same_direction.append(length)
         else:
             opposite_direction.append(length)
+        i = i + 1
     distance_x, distance_y = kernel_function(30, 1, same_direction, -50, 200)
     return distance_x, distance_y
 
 
-def get_co_expression_distribution(matrix_a):
-    co_expression_list = matrix_a.diagonal(-1).tolist()
-    co_x, co_y = kernel_function(5, 1, co_expression_list, -20, 20)
+def get_co_expression_distribution(matrix_a, gene_strand, sort_gene):
+    i = 1
+    same_corr = []
+    opposite_corr = []
+    while i < len(sort_gene):
+        tmp_corr = matrix_a[i-1][i]
+        int_corr = int(tmp_corr*20)
+        if gene_strand[sort_gene[i-1]] == gene_strand[sort_gene[i]]:
+            same_corr.append(int_corr)
+        else:
+            opposite_corr.append(int_corr)
+        i = i + 1
+    co_x, co_y = kernel_function(5, 1, same_corr, -20, 20)
     return co_x, co_y
 
 

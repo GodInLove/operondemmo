@@ -170,12 +170,12 @@ def partition_gene(gene_sorted, list_gene_strand):
             gene_strand_matrix.append([tmp_strand, query_strand(gene_j_strand)])
             k = 2
             while list_gene_strand[j - k] != gene1_strand * 11:
-                tmp_index_pre = gene_index_matrix[i][1-k]
-                tmp_index_pre_pre = gene_index_matrix[i][0-k]
+                tmp_index_pre = gene_index_matrix[i][1 - k]
+                tmp_index_pre_pre = gene_index_matrix[i][0 - k]
                 gene_index_matrix[i + 1].insert(0, tmp_index_pre)
                 gene_index_matrix[i + 1].insert(0, tmp_index_pre_pre)
-                tmp_strand_pre = gene_strand_matrix[i][1-k]
-                tmp_strand_pre_pre = gene_strand_matrix[i][0-k]
+                tmp_strand_pre = gene_strand_matrix[i][1 - k]
+                tmp_strand_pre_pre = gene_strand_matrix[i][0 - k]
                 gene_strand_matrix[i + 1].insert(0, tmp_strand_pre)
                 gene_strand_matrix[i + 1].insert(0, tmp_strand_pre_pre)
                 k = k + 2
@@ -327,19 +327,21 @@ def generate_simple_gff(gff_file, output_path):
                 _id = gene[1]['ID'][0]
                 gb_key = gene[1]['gbkey'][0]
                 locus_tag = gene[1]['locus_tag'][0]
-                symbol = gene[1]['gene'][0]
-                synonym = ";".join(gene[1]['gene_synonym'])
+                # symbol = gene[1]['gene'][0]
+                # synonym = ";".join(gene[1]['gene_synonym'])
                 if 'part' in gene[1]:
                     part = gene[1]['part'][0]
                     part_i = part.split("/")[0]
-                    for gene_syn in gene[-1]['gene_synonym']:
-                        gene_syn = gene_syn + "_" + part_i
-                        synonym = synonym + ";" + gene_syn
-                    synonym = synonym + ";" + symbol + "_" + part_i
-                    simple_gff_fp.write(locus_tag + "\t" + symbol + "\t" + synonym + "\t" + part + "\t"
+                    # for gene_syn in gene[-1]['gene_synonym']:
+                    #     gene_syn = gene_syn + "_" + part_i
+                    #     synonym = synonym + ";" + gene_syn
+                    # synonym = synonym + ";" + symbol + "_" + part_i
+                    simple_gff_fp.write(locus_tag + "\t" + "-" + "\t" + "-" + "\t" + part + "\t"
+                                        + str(start) + "\t" + str(stop) + "\t" + _id + "\t" + gb_key + "\n")
+                    simple_gff_fp.write(locus_tag + "\t" + "-" + "\t" + "-" + "\t" + part + "\t"
                                         + str(start) + "\t" + str(stop) + "\t" + _id + "\t" + gb_key + "\n")
                 else:
-                    simple_gff_fp.write(locus_tag + "\t" + symbol + "\t" + synonym + "\t" + "-" + "\t"
+                    simple_gff_fp.write(locus_tag + "\t" + "-" + "\t" + "-" + "\t" + "-" + "\t"
                                         + str(start) + "\t" + str(stop) + "\t" + _id + "\t" + gb_key + "\n")
             else:
                 # if 'pseudogene' not in gene[-1]['gene_biotype']:
@@ -349,9 +351,9 @@ def generate_simple_gff(gff_file, output_path):
                 _id = gene[-1]['ID'][0]
                 gb_key = gene[-1]['gbkey'][0]
                 locus_tag = gene[-1]['locus_tag'][0]
-                symbol = gene[-1]['gene'][0]
-                synonym = ";".join(gene[-1]['gene_synonym'])
-                simple_gff_fp.write(locus_tag + "\t" + symbol + "\t" + synonym + "\t" + "-" + "\t"
+                # symbol = gene[-1]['gene'][0]
+                # synonym = ";".join(gene[-1]['gene_synonym'])
+                simple_gff_fp.write(locus_tag + "\t" + "-" + "\t" + "-" + "\t" + "-" + "\t"
                                     + str(start) + "\t" + str(stop) + "\t" + _id + "\t" + gb_key + "\n")
                 j = 1
                 while j < len(gene) - 1:
@@ -360,12 +362,12 @@ def generate_simple_gff(gff_file, output_path):
                     _id = gene[-1]['ID'][0]
                     gb_key = gene[-1]['gbkey'][0]
                     locus_tag = gene[-1]['locus_tag'][0]
-                    symbol = gene[-1]['gene'][0] + "_" + str(j)
-                    synonym = ";".join(gene[-1]['gene_synonym'])
-                    for gene_syn in gene[-1]['gene_synonym']:
-                        gene_syn = gene_syn + "_" + str(j)
-                        synonym = synonym + ";" + gene_syn
-                    simple_gff_fp.write(locus_tag + "\t" + symbol + "\t" + synonym + "\t" + "-" + "\t"
+                    # symbol = gene[-1]['gene'][0] + "_" + str(j)
+                    # synonym = ";".join(gene[-1]['gene_synonym'])
+                    # for gene_syn in gene[-1]['gene_synonym']:
+                    #     gene_syn = gene_syn + "_" + str(j)
+                    #     synonym = synonym + ";" + gene_syn
+                    simple_gff_fp.write(locus_tag + "\t" + "-" + "\t" + "-" + "\t" + "-" + "\t"
                                         + str(start) + "\t" + str(stop) + "\t" + _id + "\t" + gb_key + "\n")
                     j = j + 1
     simple_gff_fp.close()
