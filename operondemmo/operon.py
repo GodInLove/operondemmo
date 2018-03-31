@@ -4,6 +4,7 @@ import argparse
 
 import os
 
+from operondemmo.cluster_or_classify_method.naive_bayes import get_result_by_classifying
 from operondemmo.co_expression_matrix.c_i_j import compute_co_expression_by_c_i_j
 from operondemmo.co_expression_matrix.person_i_j import compute_co_expression_by_person
 from operondemmo.co_expression_matrix.spearman_i_j import compute_co_expression_by_spearman
@@ -143,7 +144,9 @@ def operon_predict(threshold, input_dir, output_dir, gff_file_path, co_expressio
         get_result_by_clustering2(result_file, final_gene_strand, final_gene_index, final_gene_sort, matrix_i_j,
                                   threshold)
     elif result_method == "NB":
-        pass
+        print("done\nnaive bayes classifying...")
+        gene_sort = sorted_gene(gene_pos_dict)
+        get_result_by_classifying(gene_sort, gene_strand_dict, gene_pos_dict, matrix_i_j, result_file, 1, 2)
     else:
         pass
     print("done")

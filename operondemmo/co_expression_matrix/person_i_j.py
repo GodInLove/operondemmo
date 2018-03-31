@@ -12,6 +12,7 @@ def get_person_by_condition(matrix_a):
 
 def compute_co_expression_by_person(matrix_a):
     matrix_condition_s_v = get_person_by_condition(matrix_a)
+    matrix_condition_s_v = numpy.nan_to_num(matrix_condition_s_v)
     return matrix_condition_s_v
 
 
