@@ -39,7 +39,7 @@ def get_spearman_by_condition(matrix_a, p):
         i = i + 1
     pool = Pool(p)
     list_a = pool.map(spearman_task, list_g_i_g_i_plus_1)
-    matrix_spearman = numpy.diag(list_a, 1)
+    matrix_spearman = numpy.diag(list_a, -1)
     matrix_spearman = numpy.nan_to_num(matrix_spearman)
     return matrix_spearman
 
