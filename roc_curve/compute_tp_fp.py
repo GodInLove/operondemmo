@@ -90,10 +90,11 @@ def roc_curve(out_path, p_d_list, n_d_list, tp_fp_file, roc_file_path):
     return tpr, fpr, pre
 
 
-def generate_kallisto_output_files(simple_gff, input_files, method, out_path, t_list):
+def generate_kallisto_output_files(simple_gff, fna_file, input_files, method, out_path, t_list):
     _gene_pos, _gene_strand = get_gene_pos_strand(simple_gff)
     gene_strand_m, gene_index_m, sorted_gene_m = from_simple_gff_information_to_get(_gene_pos, _gene_strand)
-    matrix_co = from_fastq_file_to_get_co_matrix_co_expression(input_files, out_path + "tmp/", _gene_pos, method, 1)
+    matrix_co = from_fastq_file_to_get_co_matrix_co_expression(input_files, fna_file,
+                                                               out_path + "tmp/", _gene_pos, method, 1)
     i_iter = 0
     for each_t in t_list:
         if i_iter < 10:
@@ -126,8 +127,9 @@ def get_t_list(start, stop, n):
 if __name__ == "__main__":
     path = "/home/lyd/document/2018.1/gamma_domain/"
     eco_simple_gff = path + "simple_eco.gff_3"
-    eco_depth_files = path + "eco_count/"
-    eco_input_files = path + "eco_fastqs/"
+    eco_fna_file = path + "eco.fna"
+    # eco_depth_files = path + "eco_count/"
+    eco_input_files = path + "eco_fastq_2/"
     roc_path = "/home/lyd/document/2018.1/roc/"
     positive_data = roc_path + "positiveData.txt"
     negative_data = roc_path + "negativeData.txt"
@@ -135,45 +137,48 @@ if __name__ == "__main__":
     p_d_sort_list = get_list_from_file(positive_data)
     n_d_sort_list = get_list_from_file(negative_data)
 
-    tmp_out_path = path + "g_d_out/"
+    # tmp_out_path = path + "g_d_out/"
     co_expression_method = 0
-    tmp_tp_fp_file = path + "tp_fp.txt"
-    tmp_roc_file_path = path + "tpr_fpr.txt"
-    generate_output_files(eco_simple_gff, eco_depth_files, co_expression_method, tmp_out_path, threshold_list)
-    tpr_0, fpr_0, pre_0 = roc_curve(tmp_out_path, p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path)
+    # tmp_tp_fp_file = path + "tp_fp.txt"
+    # tmp_roc_file_path = path + "tpr_fpr.txt"
+    # generate_output_files(eco_simple_gff, eco_depth_files, co_expression_method, tmp_out_path, threshold_list)
+    # tpr_0, fpr_0, pre_0 = roc_curve(tmp_out_path, p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path)
 
     tmp_out_path = path + "g_d_out_00/"
     tmp_tp_fp_file = path + "tp_fp_00.txt"
     tmp_roc_file_path = path + "tpr_fpr_00.txt"
-    generate_kallisto_output_files(eco_simple_gff, eco_input_files, co_expression_method, tmp_out_path, threshold_list)
+    generate_kallisto_output_files(eco_simple_gff, eco_fna_file,
+                                   eco_input_files, co_expression_method, tmp_out_path, threshold_list)
     os.system("rm -r -f " + tmp_out_path + "tmp")
     tpr_00, fpr_00, pre_00 = roc_curve(tmp_out_path, p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path)
 
-    tmp_out_path = path + "g_d_out_1/"
+    # tmp_out_path = path + "g_d_out_1/"
     co_expression_method = 1
-    tmp_tp_fp_file = path + "tp_fp_1.txt"
-    tmp_roc_file_path = path + "tpr_fpr_1.txt"
-    generate_output_files(eco_simple_gff, eco_depth_files, co_expression_method, tmp_out_path, threshold_list)
-    tpr_1, fpr_1, pre_1 = roc_curve(tmp_out_path, p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path)
+    # tmp_tp_fp_file = path + "tp_fp_1.txt"
+    # tmp_roc_file_path = path + "tpr_fpr_1.txt"
+    # generate_output_files(eco_simple_gff, eco_depth_files, co_expression_method, tmp_out_path, threshold_list)
+    # tpr_1, fpr_1, pre_1 = roc_curve(tmp_out_path, p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path)
 
     tmp_out_path = path + "g_d_out_11/"
     tmp_tp_fp_file = path + "tp_fp_11.txt"
     tmp_roc_file_path = path + "tpr_fpr_11.txt"
-    generate_kallisto_output_files(eco_simple_gff, eco_input_files, co_expression_method, tmp_out_path, threshold_list)
+    generate_kallisto_output_files(eco_simple_gff, eco_fna_file,
+                                   eco_input_files, co_expression_method, tmp_out_path, threshold_list)
     os.system("rm -r -f " + tmp_out_path + "tmp")
     tpr_11, fpr_11, pre_11 = roc_curve(tmp_out_path, p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path)
 
-    tmp_out_path = path + "g_d_out_2/"
+    # tmp_out_path = path + "g_d_out_2/"
     co_expression_method = 2
-    tmp_tp_fp_file = path + "tp_fp_2.txt"
-    tmp_roc_file_path = path + "tpr_fpr_2.txt"
-    generate_output_files(eco_simple_gff, eco_depth_files, co_expression_method, tmp_out_path, threshold_list)
-    tpr_2, fpr_2, pre_2 = roc_curve(tmp_out_path, p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path)
+    # tmp_tp_fp_file = path + "tp_fp_2.txt"
+    # tmp_roc_file_path = path + "tpr_fpr_2.txt"
+    # generate_output_files(eco_simple_gff, eco_depth_files, co_expression_method, tmp_out_path, threshold_list)
+    # tpr_2, fpr_2, pre_2 = roc_curve(tmp_out_path, p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path)
 
     tmp_out_path = path + "g_d_out_22/"
     tmp_tp_fp_file = path + "tp_fp_22.txt"
     tmp_roc_file_path = path + "tpr_fpr_22.txt"
-    generate_kallisto_output_files(eco_simple_gff, eco_input_files, co_expression_method, tmp_out_path, threshold_list)
+    generate_kallisto_output_files(eco_simple_gff, eco_fna_file,
+                                   eco_input_files, co_expression_method, tmp_out_path, threshold_list)
     os.system("rm -r -f " + tmp_out_path + "tmp")
     tpr_22, fpr_22, pre_22 = roc_curve(tmp_out_path, p_d_sort_list, n_d_sort_list, tmp_tp_fp_file, tmp_roc_file_path)
 
@@ -184,9 +189,9 @@ if __name__ == "__main__":
     plt.ylabel("True Positive Rate")
     plt.xlim(0, 0.2)
     plt.ylim(0.18, 0.7)
-    plt.plot(fpr_0, tpr_0, label="c_i_j", linewidth=0.25, color="red", linestyle="dashed")
-    plt.plot(fpr_1, tpr_1, label="person", linewidth=0.25, color="green", linestyle="dashed")
-    plt.plot(fpr_2, tpr_2, label="spearman", linewidth=0.25, color="blue", linestyle="dashed")
+    # plt.plot(fpr_0, tpr_0, label="c_i_j", linewidth=0.25, color="red", linestyle="dashed")
+    # plt.plot(fpr_1, tpr_1, label="person", linewidth=0.25, color="green", linestyle="dashed")
+    # plt.plot(fpr_2, tpr_2, label="spearman", linewidth=0.25, color="blue", linestyle="dashed")
     plt.plot(fpr_00, tpr_00, label="c_i_j_k", linewidth=0.25, color="red", linestyle="solid")
     plt.plot(fpr_11, tpr_11, label="person_k", linewidth=0.25, color="green", linestyle="solid")
     plt.plot(fpr_22, tpr_22, label="spearman_k", linewidth=0.25, color="blue", linestyle="solid")
@@ -200,9 +205,9 @@ if __name__ == "__main__":
     plt.ylabel("Precision")
     plt.xlim(0.18, 0.7)
     plt.ylim(0.4, 0.8)
-    plt.plot(tpr_0, pre_0, label="c_i_j", linewidth=0.25, color="red", linestyle="dashed")
-    plt.plot(tpr_1, pre_1, label="person", linewidth=0.25, color="green", linestyle="dashed")
-    plt.plot(tpr_2, pre_2, label="spearman", linewidth=0.25, color="blue", linestyle="dashed")
+    # plt.plot(tpr_0, pre_0, label="c_i_j", linewidth=0.25, color="red", linestyle="dashed")
+    # plt.plot(tpr_1, pre_1, label="person", linewidth=0.25, color="green", linestyle="dashed")
+    # plt.plot(tpr_2, pre_2, label="spearman", linewidth=0.25, color="blue", linestyle="dashed")
     plt.plot(tpr_00, pre_00, label="c_i_j_k", linewidth=0.25, color="red", linestyle="solid")
     plt.plot(tpr_11, pre_11, label="person_k", linewidth=0.25, color="green", linestyle="solid")
     plt.plot(tpr_22, pre_22, label="spearman_k", linewidth=0.25, color="blue", linestyle="solid")
