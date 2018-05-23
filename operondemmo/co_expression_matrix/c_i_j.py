@@ -24,14 +24,9 @@ def get_co_expression_gene_i_with_j(matrix_condition_s_v):
         s_v_j_expression = matrix_condition_s_v[0:1, ...]
         s_v_other_expression = numpy.delete(matrix_condition_s_v, 0, axis=0)
         matrix_condition_s_v = s_v_other_expression
-        # print(s_v_j_expression, "\n")
-        # print(s_v_other_expression, "\n")
         s_v_multiply_j = s_v_other_expression * s_v_j_expression
-        # print(s_v_multiply_j, "\n")
         matrix_c_i_j_iter = j + 1
-        # print(s_v_multiply_j.sum(axis=1), "\n")
         matrix_c_i_j[matrix_c_i_j_iter:, j] = s_v_multiply_j.sum(axis=1)
-        # print(matrix_c_i_j, "\n")
     return matrix_c_i_j
 
 

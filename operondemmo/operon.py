@@ -138,7 +138,7 @@ def operon_predict(threshold, input_dir, output_dir, gff_file_path, co_expressio
     matrix_i_j = from_fastq_file_to_get_co_matrix_co_expression(input_dir, fna_file_path, output_dir,
                                                                 gene_pos_dict, co_expression_method, p)
     # cluster_or_classify_method
-    result_file = output_dir + "operon.txt"
+    result_file = output_dir + result_method + "_" + str(co_expression_method) + "_operon.txt"
     if result_method == "GD":
         print("done\ngamma_domain clustering...")
         get_result_by_clustering2(result_file, final_gene_strand, final_gene_index, final_gene_sort, matrix_i_j,
