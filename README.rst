@@ -63,7 +63,7 @@ Quick start
 
 .. code-block:: console
 
-   $ operondemmo -i input_dir -f fna_file_path -g gff_file_path
+   $ operondemmo -i input_dir -f fna_file_path -g gff_file_path -m GD
 
 
 
@@ -73,7 +73,7 @@ Or:
 
 .. code-block:: console
 
-   $ operondemmo -i input_dir -f fna_file_path -g gff_file_path -o out_dir -t threshold
+   $ operondemmo -i input_dir -f fna_file_path -g gff_file_path -o out_dir -t threshold -m GD
 
 
 Basic Parameters
@@ -99,7 +99,9 @@ Basic Parameters
 -p
     **PROCESS_NUM**
     Specify the number of processing threads.
-
+-m
+    **METHODS**
+    GD:GammaDomain;NB:NaiveBayes
 
 **INPUT_DIR:**
 
