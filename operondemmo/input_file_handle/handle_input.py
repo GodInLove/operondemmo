@@ -74,7 +74,7 @@ def compute_average(matrix_a, gene_pos_dict, gene_sort):
 
 def compute_expression(depth_files, gene_pos_dict, gene_sort, p):
     start = time.time()
-    pool = Pool(p)
+    pool = Pool(processes=p)
     matrix_a = pool.map(read_depth_file, depth_files)
     pool.close()
     pool.join()

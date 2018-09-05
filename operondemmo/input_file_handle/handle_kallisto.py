@@ -147,7 +147,7 @@ def get_tpm_from_kallisto_quant(kallisto_index, fastq_files, output_path, p):
         kallisto_out.append(tmp_path + str(i) + "_out/")
     kallisto_index_list = [kallisto_index] * len(fastq_files)
     start = time.time()
-    pool = Pool(p)
+    pool = Pool(processes=p)
     tpm_files = pool.starmap(run_kallisto_quant_paired, zip(fastq_files, kallisto_index_list, kallisto_out))
     pool.close()
     pool.join()

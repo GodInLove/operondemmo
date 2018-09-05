@@ -37,7 +37,7 @@ def get_spearman_by_condition(matrix_a, p):
         pd_matrix = pandas.DataFrame(np_matrix)
         list_g_i_g_i_plus_1.append(pd_matrix)
         i = i + 1
-    pool = Pool(p)
+    pool = Pool(processes=p)
     list_a = pool.map(spearman_task, list_g_i_g_i_plus_1)
     pool.close()
     pool.join()
